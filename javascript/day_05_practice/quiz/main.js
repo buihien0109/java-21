@@ -30,12 +30,21 @@ const questions = [
 let currentQuestionIndex = 0;
 let score = 0;
 let yourAnswers = [];
+let questionsStatus = questions.map((question, index) => {
+    if(index <= currentQuestionIndex) {
+        return true;
+    }
+    return false;
+});
+console.log(questionsStatus);
+
 
 const questionTitleEl = document.querySelector("#question p"); // hiển thị tiêu đề câu hỏi
 const choicesEl = document.querySelector(".choices"); // hiển thị ds các lựa chọn
 const btnNext = document.getElementById("btn-next"); // nút next
 const btnFinish = document.getElementById("btn-finish"); // nút kết thúc
 const progressBarEl = document.querySelector(".progress-bar"); // thanh progress bar
+const questionNumberEl = document.querySelector(".question-number"); // hiển thị số câu hỏi
 
 const renderQuestion = () => {
     const currentQuestion = questions[currentQuestionIndex];
@@ -56,9 +65,33 @@ const renderQuestion = () => {
     choicesEl.innerHTML = choicesHtml;
 
     // Cập nhật progress bar
-    const percent = (currentQuestionIndex + 1) / questions.length * 100;
+    const answerd = questionsStatus.filter(status => status === true).length;
+    console.log(answerd);
+    const percent = answerd / questions.length * 100;
     progressBarEl.style.width = `${percent}%`;
     progressBarEl.innerHTML = `${percent}%`;
+
+    // Cập nhật số câu hỏi
+    renderQuestionNumber();
+};
+
+const renderQuestionNumber = () => {
+    let html = "";
+    questions.forEach((question, index) => {
+       html += `
+        <div 
+            class="rounded border py-2 px-3 me-2 ${index === currentQuestionIndex ? 'border-primary' : ''}"
+            onclick="renderQuestionWithQuestionNumber(${index})";
+        >
+            ${index + 1}
+        </div>`;
+    });
+    questionNumberEl.innerHTML = html;
+}
+
+const renderQuestionWithQuestionNumber = (questionNumber) => {
+    currentQuestionIndex = questionNumber;
+    renderQuestion();
 };
 
 btnNext.addEventListener("click", () => {
@@ -76,6 +109,8 @@ btnNext.addEventListener("click", () => {
     console.log(yourAnswers);
 
     currentQuestionIndex++; // chuyển sang câu hỏi tiếp theo
+    questionsStatus[currentQuestionIndex] = true;
+    console.log(questionsStatus);
     renderQuestion(); // render câu hỏi tiếp theo trên giao diện
 
     // ẩn nút next khi đến câu hỏi cuối cùng
@@ -94,7 +129,9 @@ btnFinish.addEventListener("click", () => {
 
     // Lưu đáp án của người dùng vào mảng yourAnswers
     yourAnswers.push(checkedChoice.value);
+    questionsStatus[currentQuestionIndex] = true;
     console.log(yourAnswers);
+    console.log(questionsStatus);
 
     // Tính điểm
     questions.forEach((question, index) => {
@@ -108,5 +145,3 @@ btnFinish.addEventListener("click", () => {
 });
 
 renderQuestion();
-
-// Task : Tạo thanh progress bar để cập nhật tiến độ làm bài
