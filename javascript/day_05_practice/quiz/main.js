@@ -35,6 +35,7 @@ const questionTitleEl = document.querySelector("#question p"); // hiển thị t
 const choicesEl = document.querySelector(".choices"); // hiển thị ds các lựa chọn
 const btnNext = document.getElementById("btn-next"); // nút next
 const btnFinish = document.getElementById("btn-finish"); // nút kết thúc
+const progressBarEl = document.querySelector(".progress-bar"); // thanh progress bar
 
 const renderQuestion = () => {
     const currentQuestion = questions[currentQuestionIndex];
@@ -53,6 +54,11 @@ const renderQuestion = () => {
         `;
     });
     choicesEl.innerHTML = choicesHtml;
+
+    // Cập nhật progress bar
+    const percent = (currentQuestionIndex + 1) / questions.length * 100;
+    progressBarEl.style.width = `${percent}%`;
+    progressBarEl.innerHTML = `${percent}%`;
 };
 
 btnNext.addEventListener("click", () => {
@@ -102,3 +108,5 @@ btnFinish.addEventListener("click", () => {
 });
 
 renderQuestion();
+
+// Task : Tạo thanh progress bar để cập nhật tiến độ làm bài

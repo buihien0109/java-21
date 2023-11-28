@@ -1,46 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
         .hide {
             display: none;
         }
+        .question-number div{
+            cursor: pointer;
+        }
     </style>
 </head>
+
 <body>
-    <h2>Quiz Application</h2>
+    <div class="container">
+        <div class="row">
+            <h2 class="mt-5 mb-4">Quiz Application</h2>
+            <div class="col-lg-4">
+                <div class="question-number d-flex flex-wrap">
+                    <div class="rounded border py-2 px-3 me-2">1</div>
+                    <div class="rounded border py-2 px-3 me-2 disabled bg-black bg-opacity-10">2</div>
+                    <div class="rounded border py-2 px-3 me-2 disabled bg-black bg-opacity-10">3</div>
+                    <div class="rounded border py-2 px-3 me-2 disabled bg-black bg-opacity-10">4</div>
+                    <div class="rounded border py-2 px-3 me-2 disabled bg-black bg-opacity-10">5</div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="progress mb-4" role="progressbar" aria-label="Example with label" aria-valuenow="25"
+                    aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar" style="width: 100%">100%</div>
+                </div>
 
-    <div id="question">
-        <p>Câu 1 : Thủ đô của VN là gì?</p>
+                <div id="question" class="fw-bold">
+                    <p>Câu 1 : Thủ đô của VN là gì?</p>
+                </div>
+
+                <div class="choices">
+                    <div class="choice-item">
+                        <input type="radio" name="choice" id="choice-1" value="Hà Nội">
+                        <label for="choice-1">Hà Nội</label>
+                    </div>
+                    <div class="choice-item">
+                        <input type="radio" name="choice" id="choice-2" value="Hải Phòng">
+                        <label for="choice-2">Hải Phòng</label>
+                    </div>
+                    <div class="choice-item">
+                        <input type="radio" name="choice" id="choice-3" value="Thành phố Hồ Chí Minh">
+                        <label for="choice-3">Thành phố Hồ Chí Minh</label>
+                    </div>
+                    <div class="choice-item">
+                        <input type="radio" name="choice" id="choice-4" value="Đà Nẵng">
+                        <label for="choice-4">Đà Nẵng</label>
+                    </div>
+                </div>
+
+                <div class="btns mt-4">
+                    <button id="btn-next" class="btn btn-primary">Câu tiếp theo</button>
+                    <button id="btn-finish" class="btn btn-success hide">Kết thúc</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="choices">
-        <div class="choice-item">
-            <input type="radio" name="choice" id="choice-1" value="Hà Nội">
-            <label for="choice-1">Hà Nội</label>
-        </div>
-        <div class="choice-item">
-            <input type="radio" name="choice" id="choice-2" value="Hải Phòng">
-            <label for="choice-2">Hải Phòng</label>
-        </div>
-        <div class="choice-item">
-            <input type="radio" name="choice" id="choice-3" value="Thành phố Hồ Chí Minh">
-            <label for="choice-3">Thành phố Hồ Chí Minh</label>
-        </div>
-        <div class="choice-item">
-            <input type="radio" name="choice" id="choice-4" value="Đà Nẵng">
-            <label for="choice-4">Đà Nẵng</label>
-        </div>
-    </div>
-
-    <div class="btns">
-        <button id="btn-next">Câu tiếp theo</button>
-        <button id="btn-finish" class="hide">Kết thúc</button>
-    </div>
-    
     <script src="./main.js"></script>
 </body>
+
 </html>
