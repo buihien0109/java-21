@@ -4,8 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .hide {
+            display: none;
+        }
+    </style>
 </head>
 <body>
+    <h2>Quiz Application</h2>
+
+    <div id="question">
+        <p>Câu 1 : Thủ đô của VN là gì?</p>
+    </div>
+
+    <div class="choices">
+        <div class="choice-item">
+            <input type="radio" name="choice" id="choice-1" value="Hà Nội">
+            <label for="choice-1">Hà Nội</label>
+        </div>
+        <div class="choice-item">
+            <input type="radio" name="choice" id="choice-2" value="Hải Phòng">
+            <label for="choice-2">Hải Phòng</label>
+        </div>
+        <div class="choice-item">
+            <input type="radio" name="choice" id="choice-3" value="Thành phố Hồ Chí Minh">
+            <label for="choice-3">Thành phố Hồ Chí Minh</label>
+        </div>
+        <div class="choice-item">
+            <input type="radio" name="choice" id="choice-4" value="Đà Nẵng">
+            <label for="choice-4">Đà Nẵng</label>
+        </div>
+    </div>
+
+    <div class="btns">
+        <button id="btn-next">Câu tiếp theo</button>
+        <button id="btn-finish" class="hide">Kết thúc</button>
+    </div>
     
     <script src="./main.js"></script>
 </body>
