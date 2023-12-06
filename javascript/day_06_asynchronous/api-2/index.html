@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            .form {
+                display: flex;
+            }
+            .result {
+                width: 300px;
+                height: 400px;
+                border: 1px solid #ccc;
+            }
+            img {
+                max-width: 100%;
+                display: block;
+                margin: auto;
+                object-fit: cover;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="form">
+            <p>https://dog.ceo/api/breed/</p>
+            <select id="breed-list">
+                <!-- Render danh sách breed vào đây -->
+            </select>
+            <p>/images/random</p>
+
+            <button id="btn">Fetch</button>
+        </div>
+
+        <div class="result">
+            <img id="image" src="" alt="dog" />
+        </div>
+
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="./main.js"></script>
+    </body>
+</html>
