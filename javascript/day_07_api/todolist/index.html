@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .active {
+            color: red;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+    <h1>TodoList Application</h1>
+
+    <input type="text" placeholder="Enter todo..." id="todo-input">
+    <button id="btn-add">Add</button>
+
+    <ul id="todolist">
+        <li>
+            <input type="checkbox" checked>
+            <span class="active">Làm bài tập</span>
+            <button>Sửa</button>
+            <button>Xóa</button>
+        </li>
+        <li>
+            <input type="checkbox">
+            <span>Đi chơi với bạn bè</span>
+            <button>Sửa</button>
+            <button>Xóa</button>
+        </li>
+        <li>
+            <input type="checkbox" checked>
+            <span class="active">Đá bóng</span>
+            <button>Sửa</button>
+            <button>Xóa</button>
+        </li>
+    </ul>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./main.js"></script>
+</body>
+</html>
