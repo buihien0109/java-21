@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import vn.techmaster.demo.model.Book;
+
 import vn.techmaster.demo.model.ClassRoom;
 import vn.techmaster.demo.model.Student;
 import vn.techmaster.demo.model.Teacher;
@@ -37,26 +37,25 @@ public class DemoApplication implements CommandLineRunner {
 		return new Teacher(1, "Cường");
 	}
 
-
 	@Override
 	public void run(String... args) throws Exception {
-//		Book book =  new Book("1", "Gone with the wind", "Cuong", 1945);
-//		System.out.println(book);
-//
-//		// Suwr dụng Builder Pattern
-//		Book book2 = Book.builder()
-//				.title("Chi Pheo")
-//				.author("Nam Cao")
-//				.id("2")
-//				.year(1943)
-//				.build();
-//		System.out.println(book2);
-//
-//		// Suwr dụng Builder Pattern
-//		Book book3 = Book.builder()
-//				.author("Nam Cao")
-//				.title("Chi Pheo")
-//				.build();
-//		System.out.println(book3);
+		// Book book = new Book("1", "Gone with the wind", "Cuong", 1945);
+		// System.out.println(book);
+		//
+		// // Suwr dụng Builder Pattern
+		// Book book2 = Book.builder()
+		// .title("Chi Pheo")
+		// .author("Nam Cao")
+		// .id("2")
+		// .year(1943)
+		// .build();
+		// System.out.println(book2);
+		//
+		// // Suwr dụng Builder Pattern
+		// Book book3 = Book.builder()
+		// .author("Nam Cao")
+		// .title("Chi Pheo")
+		// .build();
+		// System.out.println(book3);
 	}
 }

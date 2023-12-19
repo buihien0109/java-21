@@ -16,7 +16,7 @@ public class BookService {
         return bookDAO.findAll();
     }
 
-    public Book getBookById(String id) {
+    public Book getBookById(int id) {
         // Cách 1:
         return bookDAO.findById(id);
 

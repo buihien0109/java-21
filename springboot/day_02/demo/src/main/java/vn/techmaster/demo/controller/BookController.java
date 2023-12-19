@@ -51,7 +51,7 @@ public class BookController {
     // 1, 2 là ID của book
     @ResponseBody
     @GetMapping("/books/{id}")
-    public Book getBookById(@PathVariable String id) {
+    public Book getBookById(@PathVariable int id) {
         return bookService.getBookById(id);
     }
 }

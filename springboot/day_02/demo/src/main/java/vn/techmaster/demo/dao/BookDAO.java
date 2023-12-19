@@ -12,9 +12,9 @@ public class BookDAO {
         return BookDB.bookList;
     }
 
-    public Book findById(String id) { // select * from book where id = ?
+    public Book findById(int id) { // select * from book where id = ?
         for (Book book : BookDB.bookList) {
-            if (book.getId().equals(id)) {
+            if (book.getId() == id) {
                 return book;
             }
         }

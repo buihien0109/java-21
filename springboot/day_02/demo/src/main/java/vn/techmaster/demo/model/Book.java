@@ -12,7 +12,7 @@ import lombok.experimental.FieldDefaults;
 @EqualsAndHashCode
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Book {
-    String id;
+    int id;
     String title;
     String author;
     int year;
