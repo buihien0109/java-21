@@ -16,5 +16,7 @@ public class InitData implements CommandLineRunner {
     public void run(String... args) throws Exception {
         PersonDB.people = fileReader.readFile("person.csv");
         System.out.println("people size : " + PersonDB.people.size());
+
+        PersonDB.people.forEach(System.out::println);
     }
 }

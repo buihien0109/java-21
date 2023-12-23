@@ -24,6 +24,5 @@ public class Person {
     private static final DateTimeFormatter dateFormatter =  DateTimeFormatter.ofPattern("yyyy-MM-dd");
     public void setBirthday(String birthday) {
         this.birthday = LocalDate.parse(birthday, dateFormatter);
-
     }
 }
