@@ -1,5 +1,7 @@
 package org.example.demo.stream.api;
 
+import org.example.demo.stream.api.dao.PersonDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,6 +16,8 @@ import java.util.List;
  * */
 @SpringBootApplication
 public class DemoStreamApiApplication implements CommandLineRunner {
+    @Autowired
+    private PersonDAO personDAO;
 
     public static void main(String[] args) {
         SpringApplication.run(DemoStreamApiApplication.class, args);
@@ -21,6 +25,7 @@ public class DemoStreamApiApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        personDAO.printListPeople(personDAO.getAll());
 //        // C1: Sử dụng class implement Greeting
 //        Greeting vietnam = new Vietnam();
 //        vietnam.sayHello("Huy");
