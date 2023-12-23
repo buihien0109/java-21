@@ -8,7 +8,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Builder // Design Pattern : Builder Pattern (Nhóm khảo tạo)
+@Builder // Design Pattern : Builder Pattern (Nhóm khởi tạo)
 @EqualsAndHashCode
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Book {

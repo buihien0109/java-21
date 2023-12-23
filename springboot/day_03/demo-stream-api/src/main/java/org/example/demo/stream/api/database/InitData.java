@@ -1,10 +1,9 @@
-package vn.techmaster.demo.database;
+package org.example.demo.stream.api.database;
 
+import org.example.demo.stream.api.utils.IFileReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
-import vn.techmaster.demo.utils.IFileReader;
-import vn.techmaster.demo.utils.JsonFileReader;
 
 // CommandLineRunner là một interface chạy 1 lần sau khi Spring Boot khởi động
 @Configuration
@@ -15,9 +14,7 @@ public class InitData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        BookDB.bookList = fileReader.readFile("book.csv");
-        System.out.println("Book size : " + BookDB.bookList.size());
-
-        BookDB.bookList.forEach(System.out::println);
+        PersonDB.people = fileReader.readFile("person.csv");
+        System.out.println("people size : " + PersonDB.people.size());
     }
 }
