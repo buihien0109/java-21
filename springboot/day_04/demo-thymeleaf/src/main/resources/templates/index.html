@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<h1>Home page 123 456</h1>
+
+<ul>
+    <li th:text="'id = ' + ${student.id}"></li>
+    <li th:text="|name = ${student.name}|"></li>
+    <li>email =
+        <th:block th:text="${student.email}"></th:block>
+    </li>
+    <li th:text="${student.phone}"></li>
+    <li th:text="${student.score}"></li>
+</ul>
+
+<h2>List Student</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Score</th>
+            <th>Rank</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="student, state : ${studentList}"
+            th:classappend="${state.odd ? 'highlight' : ''}">
+            <td th:text="${student.id}">1</td>
+            <td th:text="${student.name}">Nguyen Van A</td>
+            <td th:text="${student.email}">a@gmail.com</td>
+            <td th:text="${student.phone}">0987654321</td>
+            <td th:text="${student.score}">10</td>
+            <td th:text="${student.score > 8 ? 'Giỏi' : 'Khá'}"></td>
+            <td>
+                <a th:href="@{/student/{id} (id=${student.id})}">Xem chi tiết</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>

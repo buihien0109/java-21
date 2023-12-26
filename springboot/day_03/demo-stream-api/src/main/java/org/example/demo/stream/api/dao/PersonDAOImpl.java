@@ -4,9 +4,12 @@ import org.example.demo.stream.api.database.PersonDB;
 import org.example.demo.stream.api.model.Person;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Repository
 public class PersonDAOImpl implements PersonDAO {
@@ -97,5 +100,41 @@ public class PersonDAOImpl implements PersonDAO {
     @Override
     public Map<String, Integer> groupJobByCount() {
         return null;
+    }
+
+    @Override
+    public List<Person> inSalaryRange(int start, int end) {
+        return PersonDB.people.stream()
+                .filter(person -> person.getSalary() >= start && person.getSalary() <= end)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Person> startsWith(String prefix) {
+        return PersonDB.people.stream()
+                .filter(person -> person.getFullname().startsWith(prefix))
+                .toList();
+    }
+
+    @Override
+    public List<Person> sortByBirthYearDescending() {
+        return PersonDB.people.stream()
+                .sorted((o1, o2) -> o2.getBirthday().compareTo(o1.getBirthday()))
+                .toList();
+    }
+
+    @Override
+    public List<Person> top5HighestPaid() {
+        return PersonDB.people.stream()
+                .sorted((o1, o2) -> o2.getSalary() - o1.getSalary())
+                .limit(5)
+                .toList();
+    }
+
+    @Override // Period & Duration
+    public List<Person> inAgeRange(int start, int end) {
+        return PersonDB.people.stream()
+                .filter(person -> Period.between(person.getBirthday(), LocalDate.now()).getYears() >= start && Period.between(person.getBirthday(), LocalDate.now()).getYears() <= end)
+                .collect(Collectors.toList());
     }
 }
