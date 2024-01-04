@@ -1,0 +1,9 @@
+img {
+    max-width: 100%;
+}
+
+.movie-item img{
+    height: 250px;
+    object-fit: cover;
+}
+
