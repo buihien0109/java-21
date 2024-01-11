@@ -6,6 +6,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +18,17 @@ import java.util.Optional;
 public interface MovieRepository extends JpaRepository<Movie, Integer> {
     // Tìm kiếm phim theo tiêu đề
     List<Movie> findByTitle(String title);
+
+    // JPQL
+    @Query("SELECT m FROM Movie m WHERE m.title = ?1")
+    List<Movie> findByTitleJPQL(String title);
+
+    @Query("SELECT m FROM Movie m WHERE m.title = :title")
+    List<Movie> findByTitleJPQL1(@Param("title") String title);
+
+    // Native Query
+    @Query(value = "SELECT * FROM movies WHERE title = ?1", nativeQuery = true)
+    List<Movie> findByTitleNQ(String title);
 
     // Tìm kiếm phim theo tiêu đề chứa từ khóa
     List<Movie> findByTitleContaining(String title);
@@ -49,4 +63,15 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
     Optional<Movie> findByIdAndSlugAndStatus(Integer id, String slug, Boolean status);
 
     Page<Movie> findByStatus(Boolean status, Pageable pageable);
+
+    // Thay đổi thông tin đối tượng
+    // update
+    @Modifying
+    @Query("UPDATE Movie m SET m.title = ?1 WHERE m.id = ?2") // jpql
+    void updateTitleById(String title, Integer id);
+
+    // delete
+    @Modifying
+    @Query("DELETE FROM Movie m WHERE m.id = :id AND m.slug = :slug")
+    void deleteByIdAndSlug(@Param("id") Integer id, @Param("slug") String slug);
 }
