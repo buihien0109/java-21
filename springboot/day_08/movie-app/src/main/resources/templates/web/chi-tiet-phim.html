@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:te>Chi tiết phim</title>
+    <link rel="shortcut icon" href="/web/image/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/web/image/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/web/css/style.css">
+</head>
+<body>
+<header class="bg-dark header">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="/web/image/logo.png" alt="logo" class="logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#main-menu" aria-controls="main-menu" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between align-items-center" id="main-menu">
+                <div class="navbar-nav">
+                    <a class="nav-link text-white" href="/">Trang chủ</a>
+                    <a class="nav-link text-white" href="/phim-bo">Phim bộ</a>
+                    <a class="nav-link text-white" href="/phim-chieu-rap">Phim chiếu rạp</a>
+                    <a class="nav-link text-white" href="/phim-le">Phim lẻ</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<section class="py-4">
+    <div class="container">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a class="text-primary" href="/">Trang chủ</a></li>
+                <li class="breadcrumb-item">
+                    <a>
+                    </a><a class="text-primary" href="/phim-le">Phim lẻ</a>
+
+
+                    <!-- Trường hợp mặc định -->
+
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Đầu Gấu Đụng Đầu Đất</li>
+            </ol>
+        </nav>
+        <div class="row mt-4">
+            <div class="col-3">
+                <img id="movie-poster" class="rounded w-100"
+                     src="https://cinema.momocdn.net/img/6704916054765301-unT5IUqiZgqcGyjcOMxomdxQOMj.jpg" alt="">
+            </div>
+            <div class="col-9">
+                <h4 class="mb-3">Đầu Gấu Đụng Đầu Đất</h4>
+                <div class="p-3 bg-body-tertiary">
+                    <div class="row">
+                        <div class="col-2">
+                            <p>Thể loại</p>
+                        </div>
+                        <div class="col-10">
+                            <p>
+                                Hài, Hành động
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <p>Năm sản xuất</p>
+                        </div>
+                        <div class="col-10">
+                            <p>2022</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <p>Đạo diễn</p>
+                        </div>
+                        <div class="col-10">
+                            <p>
+                                Park Sung-woong
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <p>Diễn viên</p>
+                        </div>
+                        <div class="col-10">
+                            <p>
+                                Choi Min-soo, Lee Yi-kyung, Yeom Hye-ran, Oh Dal-su, Yoon Je-moon, Baek Ji-hye, Seo
+                                Dong-won, Han Da-sol, Kim Joon-ho, Jung Woo-sung, Kim Ki-chun
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <p>Nội dung phim</p>
+                        </div>
+                        <div class="col-10">
+                            <p>
+                                Phim Đầu Gấu Đụng Đầu Đất dựa trên câu chuyện thần thoại nổi tiếng tại Hàn Quốc về hai
+                                chú gấu sinh đôi hoá thành người sau khi ăn tỏi và ngải cứu...Xem thêm
+                                <a class="text-primary" href="">Xem
+                                    thêm</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <a class="d-inline-block btn btn-danger px-5 py-2 mt-3 rounded"
+                   href="/xem-phim/103/au-gau-ung-au-at?tap=full">
+                    <span><i class="fa-solid fa-play"></i></span>
+                    Xem phim</a>
+
+            </div>
+        </div>
+
+
+    </div>
+</section>
+
+<section class="py-4 bg-body-tertiary">
+    <div class="container">
+        <h3 class="mb-3">Phim đề xuất</h3>
+        <div class="row">
+            <div class="col-2">
+                <div class="movie-item">
+                    <a href="/phim/4/bong-dung-trung-so" class="movie-media">
+                        <div class="movie-poster rounded overflow-hidden">
+                            <img class="w-100 h-100"
+                                 src="https://cinema.momocdn.net/img/83488625990570463-eHK0Tagwl5kPhpIKstBeG045aLt.jpg"
+                                 alt="Bỗng Dưng Trúng Số">
+                        </div>
+                        <p class="mt-2">Bỗng Dưng Trúng Số</p>
+                    </a>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="movie-item">
+                    <a href="/phim/12/phu-thuy-toi-thuong-trong-a-vu-tru-hon-loan" class="movie-media">
+                        <div class="movie-poster rounded overflow-hidden">
+                            <img class="w-100 h-100"
+                                 src="https://homepage.momocdn.net/cinema/momo-cdn-api-220615142915-637909001556249236.jpg"
+                                 alt="Phù Thủy Tối Thượng Trong Đa Vũ Trụ Hỗn Loạn">
+                        </div>
+                        <p class="mt-2">Phù Thủy Tối Thượng Trong Đa Vũ Trụ Hỗn Loạn</p>
+                    </a>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="movie-item">
+                    <a href="/phim/13/nguoc-dong-thoi-gian-e-yeu-anh" class="movie-media">
+                        <div class="movie-poster rounded overflow-hidden">
+                            <img class="w-100 h-100"
+                                 src="https://cinema.momocdn.net/img/82194897270870863-2j1UQprTqpMdhJ8sImpfr8BSNNN.jpg"
+                                 alt="Ngược Dòng Thời Gian Để Yêu Anh">
+                        </div>
+                        <p class="mt-2">Ngược Dòng Thời Gian Để Yêu Anh</p>
+                    </a>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="movie-item">
+                    <a href="/phim/20/nguoi-kien-va-chien-binh-ong-the-gioi-luong-tu" class="movie-media">
+                        <div class="movie-poster rounded overflow-hidden">
+                            <img class="w-100 h-100"
+                                 src="https://cinema.momocdn.net/img/86928996194348105-p9jmVtmm29dCHDHBFrOR6WNNaeO.jpg"
+                                 alt="Người Kiến và Chiến Binh Ong: Thế Giới Lượng Tử">
+                        </div>
+                        <p class="mt-2">Người Kiến và Chiến Binh Ong: Thế Giới Lượng Tử</p>
+                    </a>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="movie-item">
+                    <a href="/phim/22/co-gai-tu-qua-khu" class="movie-media">
+                        <div class="movie-poster rounded overflow-hidden">
+                            <img class="w-100 h-100"
+                                 src="https://cinema.momocdn.net/img/82101807833736250-2Ew994vxgJRxV5y6khfMiUiugb6.jpg"
+                                 alt="Cô Gái Từ Quá Khứ">
+                        </div>
+                        <p class="mt-2">Cô Gái Từ Quá Khứ</p>
+                    </a>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="movie-item">
+                    <a href="/phim/23/black-adam" class="movie-media">
+                        <div class="movie-poster rounded overflow-hidden">
+                            <img class="w-100 h-100"
+                                 src="https://cinema.momocdn.net/img/78933546392903256-rNkWdDlagqiL4Rguy55SMOrUDUo.jpg"
+                                 alt="Black Adam">
+                        </div>
+                        <p class="mt-2">Black Adam</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-4">
+    <div class="container">
+        <div>
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="mb-3">Bình luận</h3>
+
+            </div>
+            <p>Vui lòng <a href="/dang-nhap" class="text-primary text-decoration-underline">đăng
+                nhập</a> để viết bình luận</p>
+            <div class="review-list">
+                <div class="rating-item d-flex align-items-center mb-3 pb-3">
+                    <div class="rating-avatar">
+                        <img src="https://placehold.co/200x200?text=D" alt="Bùi Hiên">
+                    </div>
+                    <div class="rating-info ms-3">
+                        <div class="d-flex align-items-center">
+                            <p class="rating-name mb-0">
+                                <strong>Bùi Hiên</strong>
+                            </p>
+                            <p class="rating-time mb-0 ms-2">09/01/2024</p>
+                        </div>
+                        <div class="rating-star">
+                            <p class="mb-0 fw-bold">
+                                <span class="rating-icon"><i class="fa fa-star"></i></span>
+                                <span>9/10 Tuyệt vời</span>
+                            </p>
+                        </div>
+                        <p class="rating-content mt-1 mb-0 text-muted">Phim xem ổn. Điểm nhấn chính là sự hài hước và
+                            tiết tấu. Kết phim chưa thực sự hài lòng. 1 số nhân vật hoành tráng ở đầu và giữa phim, thì
+                            cuối phim mờ nhạt. Diễn biến phim hoặc chưa dành đủ thời gian, hoặc chưa nhấn mạnh đủ để dẫn
+                            đến các kết quả ở cuối phim.</p>
+
+                    </div>
+                </div>
+
+
+                <div class="rating-item d-flex align-items-center mb-3 pb-3">
+                    <div class="rating-avatar">
+                        <img src="https://placehold.co/200x200?text=E" alt="Eleanora Doyle">
+                    </div>
+                    <div class="rating-info ms-3">
+                        <div class="d-flex align-items-center">
+                            <p class="rating-name mb-0">
+                                <strong>Eleanora Doyle</strong>
+                            </p>
+                            <p class="rating-time mb-0 ms-2">02/05/2023</p>
+                        </div>
+                        <div class="rating-star">
+                            <p class="mb-0 fw-bold">
+                                <span class="rating-icon"><i class="fa fa-star"></i></span>
+                                <span>10/10 Xuất sắc</span>
+                            </p>
+                        </div>
+                        <p class="rating-content mt-1 mb-0 text-muted">kì vọng như Bỗng Dưng Trúng Số nhưng thất vọng.
+                            - Time phim ngắn nên logic phim k hợp lý, cắt gọn quá mức, chi tiết tại sao nhân vật phản
+                            diện bị bắt? 2 anh em sinh đôi có bị chịu tội pháp luật không?
+                            - Chi tiết gây cười có, nhưng có những phân đoạn không...Xem thêm</p>
+
+                    </div>
+                </div>
+
+
+                <div class="rating-item d-flex align-items-center mb-3 pb-3">
+                    <div class="rating-avatar">
+                        <img src="https://placehold.co/200x200?text=R" alt="Rogelio Wuckert IV">
+                    </div>
+                    <div class="rating-info ms-3">
+                        <div class="d-flex align-items-center">
+                            <p class="rating-name mb-0">
+                                <strong>Rogelio Wuckert IV</strong>
+                            </p>
+                            <p class="rating-time mb-0 ms-2">27/04/2023</p>
+                        </div>
+                        <div class="rating-star">
+                            <p class="mb-0 fw-bold">
+                                <span class="rating-icon"><i class="fa fa-star"></i></span>
+                                <span>4/10 Dưới trung bình</span>
+                            </p>
+                        </div>
+                        <p class="rating-content mt-1 mb-0 text-muted">phim bình thường chả hay lắm.. cứ nhố nhăng kiểu
+                            gì ý. nhất là quả cuối lúc ôm vali boom để hy sinh thay vì ném nó xuống là xong đằng này 1
+                            ông ôm nhảy xuông tự tử cho oai xong thêm ông nữa nhảy xuong cứu xong boom nổ...
+                            tóm lại ko hay.. mọi người nên cân nhắc</p>
+
+                    </div>
+                </div>
+
+
+                <div class="rating-item d-flex align-items-center mb-3 pb-3">
+                    <div class="rating-avatar">
+                        <img src="https://placehold.co/200x200?text=K" alt="Kai Bauch">
+                    </div>
+                    <div class="rating-info ms-3">
+                        <div class="d-flex align-items-center">
+                            <p class="rating-name mb-0">
+                                <strong>Kai Bauch</strong>
+                            </p>
+                            <p class="rating-time mb-0 ms-2">25/04/2023</p>
+                        </div>
+                        <div class="rating-star">
+                            <p class="mb-0 fw-bold">
+                                <span class="rating-icon"><i class="fa fa-star"></i></span>
+                                <span>3/10 Tệ</span>
+                            </p>
+                        </div>
+                        <p class="rating-content mt-1 mb-0 text-muted">mình khá thất vọng với phim này, có ý tưởng, có
+                            nội dung, tuy nhiên mọi thứ quá chóng vánh, các pha hành động nhạt như nước ốc, vì mấy đoạn
+                            vietsub bắt trend mới cười chứ thực ra thấy rất nhạt. mình đã hi vọng phim cũng vui như bỗng
+                            dưng trúng số nhưng phim...Xem thêm</p>
+
+                    </div>
+                </div>
+
+
+                <div class="rating-item d-flex align-items-center mb-3 pb-3">
+                    <div class="rating-avatar">
+                        <img src="https://placehold.co/200x200?text=E" alt="Elana Jakubowski DDS">
+                    </div>
+                    <div class="rating-info ms-3">
+                        <div class="d-flex align-items-center">
+                            <p class="rating-name mb-0">
+                                <strong>Elana Jakubowski DDS</strong>
+                            </p>
+                            <p class="rating-time mb-0 ms-2">25/04/2023</p>
+                        </div>
+                        <div class="rating-star">
+                            <p class="mb-0 fw-bold">
+                                <span class="rating-icon"><i class="fa fa-star"></i></span>
+                                <span>7/10 Tốt</span>
+                            </p>
+                        </div>
+                        <p class="rating-content mt-1 mb-0 text-muted">Vừa đi xem về, mình thấy phim khá ok, tuy nội
+                            dung chưa có gì đặc sắc và cũng khá dễ đoán nhưng có kha khá cảnh hài hước, mình là người dễ
+                            xúc động nên cũng có đoạn khiến mình xúc động. Mình nghĩ xem cũng không phí tiền đâu, rảnh
+                            vẫn nên đi xem.</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="bg-dark py-4 text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <a href="#">
+                    <img src="/web/image/logo.png" alt="logo" class="logo">
+                </a>
+                <p class="mt-2">Motchill - Xem phim Online Vietsub chất lượng cao miễn phí, nhiều thể loại phim
+                    phong phú, đặc sắc, giao diện trực quan, thuận tiện, tốc độ tải nhanh, thường xuyên cập nhật các
+                    bộ phim mới.</p>
+            </div>
+            <div class="col-2">
+                <h5 class="text-uppercase mb-3">Danh mục</h5>
+                <p><a class="text-white" href="#">Tin tức</a></p>
+                <p><a class="text-white" href="#">Phim chiếu rạp</a></p>
+                <p><a class="text-white" href="#">Phim bộ</a></p>
+                <p><a class="text-white" href="#">Phim lẻ</a></p>
+                <p><a class="text-white" href="#">TV Show</a></p>
+            </div>
+            <div class="col-2">
+                <h5 class="text-uppercase mb-3">Thể loại</h5>
+                <p><a class="text-white" href="">Phim cổ trang</a></p>
+                <p><a class="text-white" href="">Phim đam mỹ</a></p>
+                <p><a class="text-white" href="">Phim bách hợp</a></p>
+                <p><a class="text-white" href="">Phim viễn tưởng</a></p>
+                <p><a class="text-white" href="">Phim hoạt hình</a></p>
+            </div>
+            <div class="col-2">
+                <h5 class="text-uppercase mb-3">Điều khoản</h5>
+                <p><a class="text-white" href="#">DMCA</a></p>
+                <p><a class="text-white" href="#">Liên hệ</a></p>
+                <p><a class="text-white" href="#">Privacy</a></p>
+                <p><a class="text-white" href="#">Terms of Service</a></p>
+            </div>
+
+            <div class="col-2">
+                <h5 class="text-uppercase mb-3">SOCIAL</h5>
+                <div class="d-flex">
+                    <p class="fs-4 me-3">
+                        <a class="text-white" href="#"><span><i class="fa-brands fa-facebook"></i></span></a>
+                    </p>
+                    <p class="fs-4 me-3">
+                        <a class="text-white" href="#"><span><i class="fa-brands fa-twitter"></i></span></a>
+                    </p>
+                    <p class="fs-4 me-2">
+                        <a class="text-white" href="#"><span><i class="fa-brands fa-youtube"></i></span></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

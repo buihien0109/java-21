@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách phim bộ</title>
+    <link rel="shortcut icon" href="/web/image/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/web/image/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/web/css/style.css">
+</head>
+<body>
+<header class="bg-dark header">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="/web/image/logo.png" alt="logo" class="logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#main-menu" aria-controls="main-menu" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between align-items-center" id="main-menu">
+                <div class="navbar-nav">
+                    <a class="nav-link text-white" href="/">Trang chủ</a>
+                    <a class="nav-link text-white" href="/phim-bo">Phim bộ</a>
+                    <a class="nav-link text-white" href="/phim-chieu-rap">Phim chiếu rạp</a>
+                    <a class="nav-link text-white" href="/phim-le">Phim lẻ</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<section class="py-4">
+    <div class="container">
+        <h3 class="mb-3">Danh sách phim bộ</h3>
+        <div class="row">
+            <div class="col-2" th:each="movie : ${pageData.getContent()}">
+                <div class="movie-item">
+                    <a th:href="@{/phim/{id}/{slug} (id=${movie.id}, slug=${movie.slug})}"
+                       class="movie-media">
+                        <div class="movie-poster rounded overflow-hidden">
+                            <img class="w-100 h-100"
+                                 th:src="${movie.poster}" th:alt="${movie.title}">
+                        </div>
+                        <p class="mt-2" th:text="${movie.title}">Cô Đi Mà Lấy Chồng Tôi</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center mt-4" id="pagination" th:if="${pageData.getTotalPages() > 1}">
+            <nav aria-label="...">
+                <ul class="pagination">
+                    <li class="page-item" th:classappend="${currentPage == 1 ? 'disabled' : ''}">
+                        <a class="page-link" th:href="@{/phim-bo (page=${currentPage - 1})}"><i
+                                class="fa-solid fa-caret-left"></i></a>
+                    </li>
+
+                    <li class="page-item"
+                        th:each="pageNumber : ${#numbers.sequence(1, pageData.getTotalPages())}"
+                        th:classappend="${pageNumber == currentPage ? 'active' : ''}">
+                        <a class="page-link" th:href="@{/phim-bo (page=${pageNumber})}" th:text="${pageNumber}">1</a>
+                    </li>
+
+                    <li class="page-item" th:classappend="${currentPage == pageData.getTotalPages() ? 'disabled' : ''}">
+                        <a class="page-link" th:href="@{/phim-bo (page=${currentPage + 1})}"><i
+                                class="fa-solid fa-caret-right"></i></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<footer class="bg-dark py-4 text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <a href="#">
+                    <img src="/web/image/logo.png" alt="logo" class="logo">
+                </a>
+                <p class="mt-2">Motchill - Xem phim Online Vietsub chất lượng cao miễn phí, nhiều thể loại phim
+                    phong phú, đặc sắc, giao diện trực quan, thuận tiện, tốc độ tải nhanh, thường xuyên cập nhật các
+                    bộ phim mới.</p>
+            </div>
+            <div class="col-2">
+                <h5 class="text-uppercase mb-3">Danh mục</h5>
+                <p><a class="text-white" href="#">Tin tức</a></p>
+                <p><a class="text-white" href="#">Phim chiếu rạp</a></p>
+                <p><a class="text-white" href="#">Phim bộ</a></p>
+                <p><a class="text-white" href="#">Phim lẻ</a></p>
+                <p><a class="text-white" href="#">TV Show</a></p>
+            </div>
+            <div class="col-2">
+                <h5 class="text-uppercase mb-3">Thể loại</h5>
+                <p><a class="text-white" href="">Phim cổ trang</a></p>
+                <p><a class="text-white" href="">Phim đam mỹ</a></p>
+                <p><a class="text-white" href="">Phim bách hợp</a></p>
+                <p><a class="text-white" href="">Phim viễn tưởng</a></p>
+                <p><a class="text-white" href="">Phim hoạt hình</a></p>
+            </div>
+            <div class="col-2">
+                <h5 class="text-uppercase mb-3">Điều khoản</h5>
+                <p><a class="text-white" href="#">DMCA</a></p>
+                <p><a class="text-white" href="#">Liên hệ</a></p>
+                <p><a class="text-white" href="#">Privacy</a></p>
+                <p><a class="text-white" href="#">Terms of Service</a></p>
+            </div>
+
+            <div class="col-2">
+                <h5 class="text-uppercase mb-3">SOCIAL</h5>
+                <div class="d-flex">
+                    <p class="fs-4 me-3">
+                        <a class="text-white" href="#"><span><i class="fa-brands fa-facebook"></i></span></a>
+                    </p>
+                    <p class="fs-4 me-3">
+                        <a class="text-white" href="#"><span><i class="fa-brands fa-twitter"></i></span></a>
+                    </p>
+                    <p class="fs-4 me-2">
+                        <a class="text-white" href="#"><span><i class="fa-brands fa-youtube"></i></span></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

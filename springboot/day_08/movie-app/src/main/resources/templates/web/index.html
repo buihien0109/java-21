@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ</title>
+    <link rel="shortcut icon" href="/web/image/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/web/image/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+          integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+          integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="/web/css/style.css">
+</head>
+<body>
+<header class="bg-dark header">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="/web/image/logo.png" alt="logo" class="logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#main-menu" aria-controls="main-menu" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between align-items-center" id="main-menu">
+                <div class="navbar-nav">
+                    <a class="nav-link text-white" href="/">Trang chủ</a>
+                    <a class="nav-link text-white" href="/phim-bo">Phim bộ</a>
+                    <a class="nav-link text-white" href="/phim-chieu-rap">Phim chiếu rạp</a>
+                    <a class="nav-link text-white" href="/phim-le">Phim lẻ</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<section class="py-4">
+    <div class="container">
+        <h3 class="mb-3">Phim HOT</h3>
+        <div class="movie-list owl-carousel">
+            <div class="movie-item" th:each="movie : ${listPhimHot}">
+                <a th:href="@{/phim/{id}/{slug} (id=${movie.id}, slug=${movie.slug})}"
+                   class="movie-media">
+                    <div class="movie-poster rounded overflow-hidden">
+                        <img class="w-100 h-100"
+                             th:src="${movie.poster}" th:alt="${movie.title}">
+                    </div>
+                    <p class="mt-2" th:text="${movie.title}">Cô Đi Mà Lấy Chồng Tôi</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-4">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <h3 class="mb-3">Phim lẻ mới cập nhật</h3>
+            <a href="#" class="text-primary text-decoration-none">Xem thêm</a>
+        </div>
+        <div class="row">
+            <div class="col-2" th:each="movie : ${listPhimLe}">
+                <div class="movie-item">
+                    <a th:href="@{/phim/{id}/{slug} (id=${movie.id}, slug=${movie.slug})}"
+                       class="movie-media">
+                        <div class="movie-poster rounded overflow-hidden">
+                            <img class="w-100 h-100"
+                                 th:src="${movie.poster}" th:alt="${movie.title}">
+                        </div>
+                        <p class="mt-2" th:text="${movie.title}">Cô Đi Mà Lấy Chồng Tôi</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-4">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <h3 class="mb-3">Phim bộ mới cập nhật</h3>
+            <a href="#" class="text-primary text-decoration-none">Xem thêm</a>
+        </div>
+        <div class="row">
+            <div class="col-2" th:each="movie : ${listPhimBo}">
+                <div class="movie-item">
+                    <a th:href="@{/phim/{id}/{slug} (id=${movie.id}, slug=${movie.slug})}"
+                       class="movie-media">
+                        <div class="movie-poster rounded overflow-hidden">
+                            <img class="w-100 h-100"
+                                 th:src="${movie.poster}" th:alt="${movie.title}">
+                        </div>
+                        <p class="mt-2" th:text="${movie.title}">Cô Đi Mà Lấy Chồng Tôi</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-4">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <h3 class="mb-3">Phim chiếu rạp mới cập nhật</h3>
+            <a href="#" class="text-primary text-decoration-none">Xem thêm</a>
+        </div>
+        <div class="row">
+            <div class="col-2" th:each="movie : ${listPhimChieuRap}">
+                <div class="movie-item">
+                    <a th:href="@{/phim/{id}/{slug} (id=${movie.id}, slug=${movie.slug})}"
+                       class="movie-media">
+                        <div class="movie-poster rounded overflow-hidden">
+                            <img class="w-100 h-100"
+                                 th:src="${movie.poster}" th:alt="${movie.title}">
+                        </div>
+                        <p class="mt-2" th:text="${movie.title}">Cô Đi Mà Lấy Chồng Tôi</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-4">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <h3 class="mb-3">Tin tức</h3>
+            <a href="#" class="text-primary text-decoration-none">Xem thêm</a>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="blog-item bg-body-tertiary p-3 rounded mb-4">
+                    <a href="">
+                        <h5>Top 15 Phim Cổ Trang Trung Quốc Hay Không Thể Bỏ Lỡ Năm 2023</h5>
+                        <p class="fst-italic">August 20, 2023</p>
+                        <p class="mb-0">Năm 2023 phim hàn quốc đã có nhiều nội dung được đổi mới và thu hút lượt xem
+                            nhiều hơn,
+                            vậy
+                            đâu là 10 bộ phim hàn quốc hot nhất năm 2023, Cùng Motchill điểm qua ...</p>
+                    </a>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="blog-item bg-body-tertiary p-3 rounded mb-4">
+                    <a href="">
+                        <h5>Top 15 Phim Cổ Trang Trung Quốc Hay Không Thể Bỏ Lỡ Năm 2023</h5>
+                        <p class="fst-italic">August 20, 2023</p>
+                        <p class="mb-0">Năm 2023 phim hàn quốc đã có nhiều nội dung được đổi mới và thu hút lượt xem
+                            nhiều hơn,
+                            vậy
+                            đâu là 10 bộ phim hàn quốc hot nhất năm 2023, Cùng Motchill điểm qua ...</p>
+                    </a>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="blog-item bg-body-tertiary p-3 rounded mb-4">
+                    <a href="">
+                        <h5>Top 15 Phim Cổ Trang Trung Quốc Hay Không Thể Bỏ Lỡ Năm 2023</h5>
+                        <p class="fst-italic">August 20, 2023</p>
+                        <p class="mb-0">Năm 2023 phim hàn quốc đã có nhiều nội dung được đổi mới và thu hút lượt xem
+                            nhiều hơn,
+                            vậy
+                            đâu là 10 bộ phim hàn quốc hot nhất năm 2023, Cùng Motchill điểm qua ...</p>
+                    </a>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="blog-item bg-body-tertiary p-3 rounded mb-4">
+                    <a href="">
+                        <h5>Top 15 Phim Cổ Trang Trung Quốc Hay Không Thể Bỏ Lỡ Năm 2023</h5>
+                        <p class="fst-italic">August 20, 2023</p>
+                        <p class="mb-0">Năm 2023 phim hàn quốc đã có nhiều nội dung được đổi mới và thu hút lượt xem
+                            nhiều hơn,
+                            vậy
+                            đâu là 10 bộ phim hàn quốc hot nhất năm 2023, Cùng Motchill điểm qua ...</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="bg-dark py-4 text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <a href="#">
+                    <img src="/web/image/logo.png" alt="logo" class="logo">
+                </a>
+                <p class="mt-2">Motchill - Xem phim Online Vietsub chất lượng cao miễn phí, nhiều thể loại phim
+                    phong phú, đặc sắc, giao diện trực quan, thuận tiện, tốc độ tải nhanh, thường xuyên cập nhật các
+                    bộ phim mới.</p>
+            </div>
+            <div class="col-2">
+                <h5 class="text-uppercase mb-3">Danh mục</h5>
+                <p><a class="text-white" href="#">Tin tức</a></p>
+                <p><a class="text-white" href="#">Phim chiếu rạp</a></p>
+                <p><a class="text-white" href="#">Phim bộ</a></p>
+                <p><a class="text-white" href="#">Phim lẻ</a></p>
+                <p><a class="text-white" href="#">TV Show</a></p>
+            </div>
+            <div class="col-2">
+                <h5 class="text-uppercase mb-3">Thể loại</h5>
+                <p><a class="text-white" href="">Phim cổ trang</a></p>
+                <p><a class="text-white" href="">Phim đam mỹ</a></p>
+                <p><a class="text-white" href="">Phim bách hợp</a></p>
+                <p><a class="text-white" href="">Phim viễn tưởng</a></p>
+                <p><a class="text-white" href="">Phim hoạt hình</a></p>
+            </div>
+            <div class="col-2">
+                <h5 class="text-uppercase mb-3">Điều khoản</h5>
+                <p><a class="text-white" href="#">DMCA</a></p>
+                <p><a class="text-white" href="#">Liên hệ</a></p>
+                <p><a class="text-white" href="#">Privacy</a></p>
+                <p><a class="text-white" href="#">Terms of Service</a></p>
+            </div>
+
+            <div class="col-2">
+                <h5 class="text-uppercase mb-3">SOCIAL</h5>
+                <div class="d-flex">
+                    <p class="fs-4 me-3">
+                        <a class="text-white" href="#"><span><i class="fa-brands fa-facebook"></i></span></a>
+                    </p>
+                    <p class="fs-4 me-3">
+                        <a class="text-white" href="#"><span><i class="fa-brands fa-twitter"></i></span></a>
+                    </p>
+                    <p class="fs-4 me-2">
+                        <a class="text-white" href="#"><span><i class="fa-brands fa-youtube"></i></span></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+        integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+        integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+    $(document).ready(function () {
+        $(".movie-list").owlCarousel({
+            items: 4,
+            margin: 20,
+            loop: true
+        });
+    });
+</script>
+
+</body>
+</html>

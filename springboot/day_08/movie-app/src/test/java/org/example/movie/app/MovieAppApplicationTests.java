@@ -36,8 +36,8 @@ class MovieAppApplicationTests {
                     .title(title)
                     .slug(slugify.slugify(title))
                     .description(faker.lorem().paragraph())
-                    .poster(faker.company().logo())
-                    .type(MovieType.values()[faker.number().numberBetween(0, 2)])
+                    .poster(generateLinkImage(title))
+                    .type(MovieType.values()[faker.number().numberBetween(0, 3)])
                     .releaseYear(faker.number().numberBetween(2018, 2023))
                     .status(status)
                     .rating(faker.number().numberBetween(1, 10))
@@ -50,24 +50,13 @@ class MovieAppApplicationTests {
         }
     }
 
-    @Test
-    void test_methods() {
-        // Select
-//        List<Movie> movies = movieRepository.findAll();
-//        System.out.println(movies.size());
-//
-//        List<Movie> movies1 = movieRepository.findAllById(List.of(1, 2, 3, 1000));
-//        System.out.println(movies1.size());
+    // get first character from string, and to uppercase
+    private static String getCharacter(String str) {
+        return str.substring(0, 1).toUpperCase();
+    }
 
-        Movie movie = movieRepository.findById(1).orElse(null);
-        System.out.println(movie);
-
-        // Update
-        movie.setTitle("Nhà bà nữ");
-        movieRepository.save(movie); // save() có thể dùng để update hoặc insert
-
-        // Delete
-        movieRepository.delete(movie); // Xóa theo object
-        movieRepository.deleteById(2); // Xóa theo id
+    // generate link author avatar follow struct : https://placehold.co/200x200?text=[...]
+    public static String generateLinkImage(String name) {
+        return "https://placehold.co/200x200?text=" + getCharacter(name);
     }
 }
