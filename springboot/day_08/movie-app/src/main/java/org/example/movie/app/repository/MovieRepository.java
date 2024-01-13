@@ -58,6 +58,11 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
     // C3: Bổ sung thêm phân trang
     Page<Movie> findByTypeAndStatus(MovieType type, boolean status, Pageable pageable);
 
+    @Query(nativeQuery = true,
+            value = "SELECT * FROM movies WHERE type = :type AND status = :status",
+            countQuery = "SELECT COUNT(*) FROM movies WHERE type = :type AND status = :status")
+    Page<Movie> findByTypeAndStatusNQ(@Param("type") MovieType type, @Param("status") boolean status, Pageable pageable);
+
     List<Movie> findByTypeAndStatus(MovieType movieType, Boolean status, Sort sort);
 
     Optional<Movie> findByIdAndSlugAndStatus(Integer id, String slug, Boolean status);
@@ -74,4 +79,22 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
     @Modifying
     @Query("DELETE FROM Movie m WHERE m.id = :id AND m.slug = :slug")
     void deleteByIdAndSlug(@Param("id") Integer id, @Param("slug") String slug);
+
+    // sách phim đề xuất sẽ là những phim có cùng type với phim đó, có status = true, và có rating >= 8,
+    // và sắp xếp theo rating giảm dần, view giảm dần, publishedAt giảm dần. Nhưng không chứa phim có id = 1
+    // C1: Method query
+    List<Movie> findByTypeAndStatusAndRatingGreaterThanEqualAndIdNotOrderByRatingDescViewDescPublishedAtDesc(
+            MovieType type,
+            Boolean status,
+            Integer rating,
+            Integer id
+    );
+
+    // C2: JPQL
+    @Query("SELECT m FROM Movie m WHERE m.type = :type AND m.status = true AND m.rating >= 8 AND m.id != :id ORDER BY m.rating DESC, m.view DESC, m.publishedAt DESC")
+    List<Movie> findRecommendedMovies(MovieType type, Integer id);
+
+    // C3: Native Query
+    @Query(value = "SELECT * FROM movies WHERE type = :type AND status = true AND rating >= 8 AND id != :id ORDER BY rating DESC, view DESC, published_at DESC", nativeQuery = true)
+    List<Movie> findRecommendedMoviesNQ(MovieType type, Integer id);
 }
