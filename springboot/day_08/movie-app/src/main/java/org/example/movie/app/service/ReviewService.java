@@ -89,7 +89,7 @@ public class ReviewService {
 
         // Kiểm tra xem user có phải là người tạo review không
         if (!review.getUser().getId().equals(currentUser.getId())) {
-            throw new BadRequestException("Bạn không có quyền cập nhật review này");
+            throw new BadRequestException("Bạn không có quyền xóa review này");
         }
 
         // Xóa review
