@@ -23,8 +23,33 @@ public class Review {
     String content;
 
     Integer rating;
+
+    @Transient // Không tạo cột trong database
+    String ratingText;
+
     Date createdAt;
     Date updatedAt;
+
+    public String getRatingText() {
+        if (rating == null) {
+            return "Chưa có đánh giá";
+        }
+
+        // switch rating from 1 to 10
+        return switch (rating) {
+            case 1 -> "Tệ";
+            case 2 -> "Kém";
+            case 3 -> "Trung bình";
+            case 4 -> "Tạm được";
+            case 5 -> "Hay";
+            case 6 -> "Rất hay";
+            case 7 -> "Tuyệt vời";
+            case 8 -> "Tuyệt hảo";
+            case 9 -> "Xuất sắc";
+            case 10 -> "Quá tuyệt vời";
+            default -> "Chưa có đánh giá";
+        };
+    }
 
     @ManyToOne
     @JoinColumn(name = "movie_id")

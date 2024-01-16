@@ -2,7 +2,9 @@ package org.example.movie.app.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.movie.app.entity.Movie;
+import org.example.movie.app.entity.Review;
 import org.example.movie.app.model.enums.MovieType;
+import org.example.movie.app.service.ReviewService;
 import org.example.movie.app.service.WebService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -11,10 +13,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 public class WebController {
     private final WebService webService;
+    private final ReviewService reviewService;
 
     @GetMapping("/")
     public String getHomePage(Model model) {
@@ -65,7 +70,12 @@ public class WebController {
     @GetMapping("/phim/{id}/{slug}")
     public String getPhimDetailPage(Model model, @PathVariable Integer id, @PathVariable String slug) {
         Movie movie = webService.getMovie(id, slug, true);
+        List<Movie> relatedMovies = webService.getRelatedMovies(id, movie.getType(), true, 6);
+        List<Review> reviews = reviewService.getReviewsOfMovie(id);
+
         model.addAttribute("movie", movie);
+        model.addAttribute("relatedMovies", relatedMovies);
+        model.addAttribute("reviews", reviews);
         return "web/chi-tiet-phim";
     }
 }
