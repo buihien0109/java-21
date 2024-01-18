@@ -40,7 +40,7 @@ public class AuthService {
     // Về nhà làm
     public void register(RegisterRequest request) {
     }
-    
+
     public void logout() {
         // Xóa thông tin user trong session
         // session.removeAttribute("currentUser");

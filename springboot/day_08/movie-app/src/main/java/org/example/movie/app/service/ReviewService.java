@@ -1,5 +1,6 @@
 package org.example.movie.app.service;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.movie.app.entity.Movie;
@@ -22,16 +23,15 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final UserRepository userRepository;
     private final MovieRepository movieRepository;
+    private final HttpSession session;
 
     public List<Review> getReviewsOfMovie(Integer movieId) {
         return reviewRepository.findByMovie_IdOrderByCreatedAtDesc(movieId);
     }
 
     public Review createReview(UpsertReviewRequest request) {
-        // TODO: Giả định current user là user có id = 1. Sau này current user sẽ là user đang login
-        Integer currentUserId = 1;
-        User currentUser = userRepository.findById(currentUserId) // Kiểm tra xem user có tồn tại không
-                .orElseThrow(() -> new ResourceNotFoundException("User không tồn tại"));
+        // Lấy thông tin user từ trong session với key currentUser
+        User currentUser = (User) session.getAttribute("currentUser");
 
         Movie movie = movieRepository.findById(request.getMovieId()) // Kiểm tra xem movie có tồn tại không
                 .orElseThrow(() -> new ResourceNotFoundException("Phim không tồn tại"));
@@ -49,10 +49,8 @@ public class ReviewService {
     }
 
     public Review updateReview(Integer id, UpsertReviewRequest request) {
-        // TODO: Giả định current user là user có id = 1. Sau này current user sẽ là user đang login
-        Integer currentUserId = 1;
-        User currentUser = userRepository.findById(currentUserId) // Kiểm tra xem user có tồn tại không
-                .orElseThrow(() -> new ResourceNotFoundException("User không tồn tại"));
+        // Lấy thông tin user từ trong session với key currentUser
+        User currentUser = (User) session.getAttribute("currentUser");
 
         Movie movie = movieRepository.findById(request.getMovieId()) // Kiểm tra xem movie có tồn tại không
                 .orElseThrow(() -> new ResourceNotFoundException("Phim không tồn tại"));
@@ -79,10 +77,8 @@ public class ReviewService {
     }
 
     public void deleteReview(Integer id) {
-        // TODO: Giả định current user là user có id = 1. Sau này current user sẽ là user đang login
-        Integer currentUserId = 1;
-        User currentUser = userRepository.findById(currentUserId) // Kiểm tra xem user có tồn tại không
-                .orElseThrow(() -> new ResourceNotFoundException("User không tồn tại"));
+        // Lấy thông tin user từ trong session với key currentUser
+        User currentUser = (User) session.getAttribute("currentUser");
 
         Review review = reviewRepository.findById(id) // Kiểm tra xem review có tồn tại không
                 .orElseThrow(() -> new ResourceNotFoundException("Review không tồn tại"));
