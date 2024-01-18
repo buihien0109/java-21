@@ -9,6 +9,7 @@ import org.example.movie.app.repository.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -38,6 +39,9 @@ class MovieAppApplicationTests {
 
     @Autowired
     private ReviewRepository reviewRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Test
     void save_all_genre() {
@@ -155,7 +159,7 @@ class MovieAppApplicationTests {
             User user = User.builder()
                     .name(name)
                     .email(faker.internet().emailAddress())
-                    .password("123")
+                    .password(bCryptPasswordEncoder.encode("123"))
                     .avatar(generateLinkImage(name))
                     .role(i == 0 || i == 1 ? UserRole.ADMIN : UserRole.USER)
                     .build();

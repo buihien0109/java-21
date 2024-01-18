@@ -78,4 +78,14 @@ public class WebController {
         model.addAttribute("reviews", reviews);
         return "web/chi-tiet-phim";
     }
+
+    @GetMapping("/dang-ky")
+    public String getDangKyPage() {
+        return "web/dang-ky";
+    }
+
+    @GetMapping("/dang-nhap")
+    public String getDangNhapPage() {
+        return "web/dang-nhap";
+    }
 }

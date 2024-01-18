@@ -295,3 +295,7 @@ ul {
     line-height: 1.5em; /* Điều chỉnh dựa trên kích thước font và yêu cầu layout */
     max-height: 3em; /* 1.2em (line-height) * 2 (số dòng) */
 }
+
+.rating-item.active {
+    color: #EDBB0E;
+}
