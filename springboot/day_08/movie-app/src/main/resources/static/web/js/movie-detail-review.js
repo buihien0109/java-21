@@ -1,5 +1,5 @@
 // Rating ---------------------------------------------------------------------
-const stars = document.querySelectorAll(".rating-item");
+const stars = document.querySelectorAll(".rating-container .rating-item");
 const ratingValue = document.getElementById("rating-value");
 
 let currentRating = 0;
@@ -17,7 +17,7 @@ stars.forEach((star) => {
 
     star.addEventListener("click", () => {
         currentRating = parseInt(star.dataset.rating);
-        ratingValue.textContent = `Bạn đã đánh giá ${currentRating} sao.`;
+        ratingValue.innerHTML = `Bạn đã đánh giá ${currentRating} sao.`;
         highlightStars(currentRating);
     });
 });
@@ -86,7 +86,6 @@ let reviewIdUpdated = null;
 
 // 1. Xóa review
 const deleteReview = (reviewId) => {
-    console.log(reviewId)
     // Hỏi người dùng có chắc chắn xóa không?
     const isConfirmed = window.confirm('Bạn có chắc chắn muốn xóa review này?')
     if (!isConfirmed) return
@@ -108,11 +107,11 @@ const deleteReview = (reviewId) => {
 }
 
 const btnOpenModalReview = document.getElementById('btn-open-modal-review')
+const ratingContentEl = document.getElementById('rating-content')
 const modalReview = new bootstrap.Modal(document.getElementById('modal-review'), {
     keyboard: false
 })
 btnOpenModalReview.addEventListener('click', function () {
-    console.log('click')
     // Mở modal
     modalReview.show();
 
@@ -122,16 +121,14 @@ btnOpenModalReview.addEventListener('click', function () {
 
 
 document.getElementById('modal-review').addEventListener('hidden.bs.modal', function (event) {
-    console.log('hidden modal')
     resetStars();
-    ratingValue.textContent = "";
+    ratingValue.innerHTML = "";
     ratingContentEl.value = "";
     reviewIdUpdated = null;
     currentRating = 0;
 })
 
 const btnHandleReview = document.getElementById('btn-handle-review')
-const ratingContentEl = document.getElementById('rating-content')
 btnHandleReview.addEventListener('click', function () {
     if(reviewIdUpdated) {
         // Cập nhật review
@@ -179,20 +176,16 @@ const createReview = () => {
 
 // 3. Cập nhật review
 const openModalUpdate = id => {
-    console.log("open modal update: " + id)
     // Tìm kiếm review có id = id
     const review = reviews.find(review => review.id === id)
-    console.log(review)
 
     // Thay đổi title của modal
     document.getElementById("modal-title").innerHTML = "Cập nhật đánh giá";
 
     // Cập nhật dữ liệu cho modal
     resetStars();
-    console.log(currentRating)
     currentRating = review.rating;
-    console.log(currentRating)
-    ratingValue.textContent = `Bạn đã đánh giá ${currentRating} sao.`;
+    ratingValue.innerHTML = `Bạn đã đánh giá ${review.rating} sao.`;
     highlightStars(currentRating);
 
     ratingContentEl.value = review.content
