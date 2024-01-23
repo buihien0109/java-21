@@ -19,12 +19,18 @@ public class AuthResource {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         authService.login(request);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().build(); // status code 200
     }
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
         authService.register(request);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout() {
+        authService.logout();
         return ResponseEntity.ok().build();
     }
 }

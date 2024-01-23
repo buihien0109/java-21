@@ -21,7 +21,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReviewService {
     private final ReviewRepository reviewRepository;
-    private final UserRepository userRepository;
     private final MovieRepository movieRepository;
     private final HttpSession session;
 

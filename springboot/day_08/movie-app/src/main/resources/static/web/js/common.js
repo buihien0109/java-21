@@ -15,3 +15,17 @@ toastr.options = {
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
 }
+
+function logout() {
+    axios.post("/api/auth/logout")
+        .then(function (response) {
+            toastr.success('Đăng xuất thành công.')
+            setTimeout(function () {
+                window.location.href = "/dang-nhap";
+            }, 1500);
+        })
+        .catch(function (error) {
+            console.log(error);
+            toastr.error(error.response.data.message)
+        });
+}

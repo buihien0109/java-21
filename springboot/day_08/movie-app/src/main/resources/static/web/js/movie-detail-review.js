@@ -47,6 +47,7 @@ const formatDate = (dateString) => {
 }
 
 const renderReviews = (reviews) => {
+    console.log(reviews)
     const htmlReviews = reviews.map((review) => {
         return `
             <div class="rating-item d-flex align-items-center mb-3 pb-3">
@@ -68,11 +69,13 @@ const renderReviews = (reviews) => {
                         </div>
                         <p class="rating-content mt-1 mb-0 text-muted">${review.content}</p>
 
-                        <div class="rating-action mt-2">
-                            <a href="javascript:void(0)" class="text-primary text-decoration-underline me-2" onclick="openModalUpdate(${review.id})">Sửa</a>
-                            <a href="javascript:void(0)" class="text-danger text-decoration-underline" onclick="deleteReview(${review.id})">Xóa</a>
-                        </div>
-
+                        ${currentUser && currentUser.id === review.user.id 
+                            ? `<div class="rating-action mt-2">
+                                    <a href="javascript:void(0)" class="text-primary text-decoration-underline me-2" onclick="openModalUpdate(${review.id})">Sửa</a>
+                                    <a href="javascript:void(0)" class="text-danger text-decoration-underline" onclick="deleteReview(${review.id})">Xóa</a>
+                                </div>`
+                            : ''
+                        }
                     </div>
                 </div>
         `
@@ -139,6 +142,7 @@ btnHandleReview.addEventListener('click', function () {
 });
 // 2. Tạo mới review
 const createReview = () => {
+    console.log('create review')
     // Kiểm tra xem người dùng đã đánh giá chưa?
     if(!currentRating) {
         toastr.error('Bạn chưa đánh giá.')

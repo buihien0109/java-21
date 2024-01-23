@@ -10,7 +10,6 @@ import org.example.movie.app.model.request.LoginRequest;
 import org.example.movie.app.model.request.RegisterRequest;
 import org.example.movie.app.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -39,6 +38,30 @@ public class AuthService {
 
     // Về nhà làm
     public void register(RegisterRequest request) {
+        // Kiểm tra xem email đã tồn tại chưa
+        // Nếu tồn tại rồi thì throw exception
+        if (userRepository.existsByEmail(request.getEmail())) {
+            throw new BadRequestException("Email đã tồn tại");
+        }
+
+        // Kiểm tra xem password có trùng với confirm password không
+        // Nếu không trùng thì throw exception
+        if (!request.getPassword().equals(request.getConfirmPassword())) {
+            throw new BadRequestException("Mật khẩu không trùng khớp");
+        }
+
+        // Mã hóa password
+        String encodedPassword = bCryptPasswordEncoder.encode(request.getPassword());
+
+        // Tạo user
+        User user = User.builder()
+                .name(request.getName())
+                .email(request.getEmail())
+                .password(encodedPassword)
+                .build();
+
+        // Lưu user vào database
+        userRepository.save(user);
     }
 
     public void logout() {

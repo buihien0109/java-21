@@ -18,6 +18,9 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
           integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+          integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="/web/css/style.css">
 </head>
 <body>
@@ -38,6 +41,15 @@
                     <a class="nav-link text-white" href="/phim-bo">Phim bộ</a>
                     <a class="nav-link text-white" href="/phim-chieu-rap">Phim chiếu rạp</a>
                     <a class="nav-link text-white" href="/phim-le">Phim lẻ</a>
+                </div>
+                <div>
+                    <div th:if="${session.currentUser == null}">
+                        <a class="text-white" href="/dang-nhap">Đăng nhập</a>
+                    </div>
+                    <div th:if="${session.currentUser != null}" class="d-flex align-items-center">
+                        <p th:text="${session.currentUser.name}" class="mb-0 me-2 text-white"></p>
+                        <a href="javascript:void(0)" class="text-white fst-italic" onclick="logout()">(Đăng xuất)</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -252,7 +264,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
         integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+        integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/web/js/common.js"></script>
 <script>
     $(document).ready(function () {
         $(".movie-list").owlCarousel({

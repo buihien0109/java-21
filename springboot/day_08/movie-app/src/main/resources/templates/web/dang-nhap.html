@@ -132,7 +132,38 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="/web/js/common.js"></script>
 <script th:inline="javascript">
+const emailEl = document.getElementById('email');
+const passwordEl = document.getElementById('password');
+const formLoginEl = document.getElementById('form-login');
 
+formLoginEl.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    // Check validate
+
+    const data = {
+        email: emailEl.value,
+        password: passwordEl.value
+    }
+
+    // Call api sử dụng axios
+    axios.post('/api/auth/login', data)
+        .then((response) => {
+            console.log(response);
+            if (response.status === 200) {
+                toastr.success('Đăng nhập thành công');
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 1500)
+            } else {
+                toastr.error('Đăng nhập thất bại');
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+            toastr.error(error.response.data.message);
+        })
+})
 </script>
 </body>
 </html>
