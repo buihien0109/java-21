@@ -1,8 +1,10 @@
 package org.example.movie.app.controller;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.example.movie.app.entity.Movie;
 import org.example.movie.app.entity.Review;
+import org.example.movie.app.entity.User;
 import org.example.movie.app.model.enums.MovieType;
 import org.example.movie.app.service.ReviewService;
 import org.example.movie.app.service.WebService;
@@ -20,6 +22,7 @@ import java.util.List;
 public class WebController {
     private final WebService webService;
     private final ReviewService reviewService;
+    private final HttpSession session;
 
     @GetMapping("/")
     public String getHomePage(Model model) {
@@ -81,11 +84,19 @@ public class WebController {
 
     @GetMapping("/dang-ky")
     public String getDangKyPage() {
-        return "web/dang-ky";
+        User user = (User) session.getAttribute("currentUser"); // Lấy thông tin người dùng trong session
+        if (user != null) { // Nếu đăng nhập thì chuyển hướng về trang chủ
+            return "redirect:/";
+        }
+        return "web/dang-ky"; // Nếu chưa đăng nhập thì hiển thị trang đăng ký
     }
 
     @GetMapping("/dang-nhap")
     public String getDangNhapPage() {
-        return "web/dang-nhap";
+        User user = (User) session.getAttribute("currentUser"); // Lấy thông tin người dùng trong session
+        if (user != null) { // Nếu đăng nhập thì chuyển hướng về trang chủ
+            return "redirect:/";
+        }
+        return "web/dang-nhap"; // Nếu chưa đăng nhập thì hiển thị trang đăng nhập
     }
 }
