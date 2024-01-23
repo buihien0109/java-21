@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<header class="bg-dark header">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="/web/image/logo.png" alt="logo" class="logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#main-menu" aria-controls="main-menu" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between align-items-center" id="main-menu">
+                <div class="navbar-nav">
+                    <a class="nav-link text-white" href="/">Trang chủ</a>
+                    <a class="nav-link text-white" href="/phim-bo">Phim bộ</a>
+                    <a class="nav-link text-white" href="/phim-chieu-rap">Phim chiếu rạp</a>
+                    <a class="nav-link text-white" href="/phim-le">Phim lẻ</a>
+                </div>
+                <div>
+                    <div th:if="${session.currentUser == null}">
+                        <a class="text-white" href="/dang-nhap">Đăng nhập</a>
+                    </div>
+                    <div th:if="${session.currentUser != null}" class="d-flex align-items-center">
+                        <p th:text="${session.currentUser.name}" class="mb-0 me-2 text-white"></p>
+                        <a href="javascript:void(0)" class="text-white fst-italic" onclick="logout()">(Đăng xuất)</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+</body>
+</html>

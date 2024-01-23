@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="col-2" th:fragment="movie-item(movie)">
+    <div class="movie-item">
+        <a th:href="@{/phim/{id}/{slug} (id=${movie.id}, slug=${movie.slug})}"
+           class="movie-media">
+            <div class="movie-poster rounded overflow-hidden">
+                <img class="w-100 h-100"
+                     th:src="${movie.poster}" th:alt="${movie.title}">
+            </div>
+            <p class="mt-2" th:text="${movie.title}">Cô Đi Mà Lấy Chồng Tôi</p>
+        </a>
+    </div>
+</div>
+</body>
+</html>
