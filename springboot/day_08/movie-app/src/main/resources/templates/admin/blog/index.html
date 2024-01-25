@@ -57,25 +57,17 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
+                                <tr th:each="blog : ${blogList}">
                                     <td>
-                                        <a href="/admin/blogs/30/detail">Top 11 phim có doanh thu cao nhất mọi thời đại</a>
+                                        <a th:href="@{/admin/blogs/{id}/detail (id=${blog.id})}"
+                                           th:text="${blog.title}">Top 11 phim có doanh thu cao nhất mọi thời đại</a>
                                     </td>
                                     <td>
-                                        <a href="/admin/users/2">Bùi Hiên</a>
+                                        <a th:href="@{/admin/users/{id}/detail (id=${blog.user.id})}"
+                                           th:text="${blog.user.name}">Bùi Hiên</a>
                                     </td>
-                                    <td>Công khai</td>
-                                    <td>09/01/2024</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="/admin/blogs/29/detail">Những bộ phim hình sự TVB hay nhất những năm qua</a>
-                                    </td>
-                                    <td>
-                                        <a href="/admin/users/2">Bùi Hiên</a>
-                                    </td>
-                                    <td>Công khai</td>
-                                    <td>09/01/2024</td>
+                                    <td th:text="${blog.status ? 'Công khai' : 'Nháp'}">Công khai</td>
+                                    <td th:text="${#dates.format(blog.createdAt, 'dd/MM/yyyy')}">09/01/2024</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -89,7 +81,15 @@
 
 <th:block id="js">
     <script th:inline="javascript">
-
+        $('#table-blog').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
     </script>
 </th:block>
 </body>
