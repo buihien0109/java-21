@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{admin/layout/layout :: layout(~{:: title}, ~{:: #css}, ~{:: .content-wrapper}, ~{:: #js})}">
+
+<head>
+    <title>Tạo đạo diễn</title>
+
+    <th:block id="css">
+        <link rel="stylesheet" th:href="@{/admin-assets/admin-lte/plugins/summernote/summernote-bs4.min.css}"/>
+        <link rel="stylesheet" th:href="@{/admin-assets/admin-lte/plugins/select2/css/select2.min.css}"/>
+        <link rel="stylesheet" th:href="@{/admin-assets/assets/css/style.css}">
+    </th:block>
+
+</head>
+
+<body>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-12">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="/admin/dashboard">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="/admin/directors">Đạo diễn</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            Tạo đạo diễn
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row py-2">
+                <div class="col-6">
+                    <a href="/admin/directors" type="button" class="btn btn-default">
+                        <i class="fas fa-chevron-left"></i> Quay lại
+                    </a>
+                    <button type="button" class="btn btn-info px-4" id="btn-create">
+                        Lưu
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <form id="form-create-director">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Họ tên</label>
+                                            <input type="text" class="form-control" id="name" name="name"/>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Mô tả ngắn</label>
+                                            <textarea id="description" class="form-control" rows="5"
+                                                      name="description"></textarea>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Birthday</label>
+                                            <input type="date" class="form-control" id="birthday" name="birthday"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<th:block id="js">
+    <script>
+        $('#form-create-director').validate({
+            rules: {
+                name: {
+                    required: true
+                },
+                description: {
+                    required: true
+                },
+                birthday: {
+                    required: true
+                }
+            },
+            messages: {
+                name: {
+                    required: "Họ tên không được để trống"
+                },
+                description: {
+                    required: "Mô tả ngắn không được để trống"
+                },
+                birthday: {
+                    required: "Birthday không được để trống"
+                }
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+
+        // Lưu đạo diễn
+        const nameEl = document.getElementById('name');
+        const descriptionEl = document.getElementById('description');
+        const birthdayEl = document.getElementById('birthday');
+
+        const btnCreate = document.getElementById('btn-create');
+        btnCreate.addEventListener('click', function () {
+            if (!$('#form-create-director').valid()) {
+                return;
+            }
+
+            // Gửi dữ liệu lên server
+            const data = {
+                name: nameEl.value,
+                description: descriptionEl.value,
+                birthday: new Date(birthdayEl.value)
+            }
+            console.log(data)
+
+            // Sử dụng axios để gửi dữ liệu lên server
+            axios.post('/api/admin/directors', data)
+                .then(function (response) {
+                    toastr.success('Tạo đạo diễn thành công')
+                    setTimeout(function () {
+                        window.location.href = `/admin/directors/${response.data.id}/detail`
+                    }, 1500)
+                })
+                .catch(function (error) {
+                    console.log(error)
+                    toastr.error(error.response.data.message)
+                })
+        })
+    </script>
+</th:block>
+
+</body>
+
+</html>

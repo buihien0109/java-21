@@ -47,7 +47,7 @@ public class Blog {
             publishedAt = new Date();
         }
     }
-    
+
     @PreUpdate
     public void preUpdate() {
         updatedAt = new Date();
