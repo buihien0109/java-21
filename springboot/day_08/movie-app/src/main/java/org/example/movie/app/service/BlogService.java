@@ -1,5 +1,6 @@
 package org.example.movie.app.service;
 
+import com.github.slugify.Slugify;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.example.movie.app.entity.Blog;
@@ -7,6 +8,8 @@ import org.example.movie.app.entity.User;
 import org.example.movie.app.exception.ResourceNotFoundException;
 import org.example.movie.app.model.request.UpsertBlogRequest;
 import org.example.movie.app.repository.BlogRepository;
+import org.example.movie.app.utils.FileUtils;
+import org.example.movie.app.utils.StringUtils;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,6 +22,7 @@ public class BlogService {
     private final BlogRepository blogRepository;
     private final HttpSession session;
     private final FileService fileService;
+    private final Slugify slugify;
 
     // Lấy tất cả bài viết sắp xếp theo createdAt giảm dần
     public List<Blog> getAllBlogs() {
@@ -41,16 +45,49 @@ public class BlogService {
 
     // Tạo bài viết
     public Blog createBlog(UpsertBlogRequest request) {
-        return null;
+        User user = (User) session.getAttribute("currentUser");
+
+        // Create blog
+        Blog blog = Blog.builder()
+                .title(request.getTitle())
+                .slug(slugify.slugify(request.getTitle()))
+                .content(request.getContent())
+                .description(request.getDescription())
+                .status(request.getStatus())
+                .user(user)
+                .thumbnail(StringUtils.generateLinkImage(request.getTitle()))
+                .build();
+
+        return blogRepository.save(blog);
     }
 
     // Cập nhật bài viết
     public Blog updateBlog(Integer id, UpsertBlogRequest request) {
-        return null;
+        // find blog by id
+        Blog blog = blogRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy bài viết với id = " + id));
+
+        // update blog
+        blog.setTitle(request.getTitle());
+        blog.setSlug(slugify.slugify(request.getTitle()));
+        blog.setDescription(request.getDescription());
+        blog.setContent(request.getContent());
+        blog.setStatus(request.getStatus());
+
+        return blogRepository.save(blog);
     }
 
     // Xóa bài viết
     public void deleteBlog(Integer id) {
+        Blog blog = blogRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy bài viết với id = " + id));
+
+        // Kiểm tra xem blog có thumbnail không. Nếu có thì xóa file thumbnail
+        if (blog.getThumbnail() != null) {
+            FileUtils.deleteFile(blog.getThumbnail());
+        }
+
+        blogRepository.delete(blog);
     }
 
     // Upload thumbnail

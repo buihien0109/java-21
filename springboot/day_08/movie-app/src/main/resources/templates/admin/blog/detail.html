@@ -60,12 +60,14 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <form id="form-update-blog">
+                            <form id="form-update-blog">
+                                <div class="row">
+                                    <div class="col-md-8">
+
                                         <div class="form-group">
                                             <label>Tiêu đề</label>
-                                            <input type="text" class="form-control" id="title" name="title" th:value="${blog.title}"/>
+                                            <input type="text" class="form-control" id="title" name="title"
+                                                   th:value="${blog.title}"/>
                                         </div>
 
                                         <div class="form-group">
@@ -79,32 +81,33 @@
                                             <textarea id="description" class="form-control" rows="3"
                                                       name="description" th:text="${blog.description}"></textarea>
                                         </div>
-                                    </form>
-                                </div>
 
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Trạng thái</label>
-                                        <select id="status" class="form-control">
-                                            <option value="false" th:selected="${blog.status == false}">
-                                                Nháp
-                                            </option>
-                                            <option value="true" th:selected="${blog.status == true}">
-                                                Công khai
-                                            </option>
-                                        </select>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="image-preview-container mb-3">
-                                            <img th:src="${blog.thumbnail}" alt="" id="image-preview"/>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Trạng thái</label>
+                                            <select id="status" class="form-control" name="status">
+                                                <option value="false" th:selected="${blog.status == false}">
+                                                    Nháp
+                                                </option>
+                                                <option value="true" th:selected="${blog.status == true}">
+                                                    Công khai
+                                                </option>
+                                            </select>
                                         </div>
-                                        <label for="image" class="btn btn-info btn-flat rounded">
-                                            Chọn hình ảnh
-                                        </label>
-                                        <input type="file" id="image" class="d-none">
+                                        <div class="form-group">
+                                            <div class="image-preview-container mb-3">
+                                                <img th:src="${blog.thumbnail}" alt="" id="image-preview"/>
+                                            </div>
+                                            <label for="image" class="btn btn-info btn-flat rounded">
+                                                Chọn hình ảnh
+                                            </label>
+                                            <input type="file" id="image" class="d-none">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -121,6 +124,106 @@
 
         $('#content').summernote({
             height: 500,
+        })
+
+        $("#content").css({
+            "display": "block",
+            "height": "0",
+            "padding": "0",
+            "border": "none"
+        })
+
+        $('#form-update-blog').validate({
+            rules: {
+                title: {
+                    required: true
+                },
+                content: {
+                    required: true
+                },
+                description: {
+                    required: true
+                },
+                status: {
+                    required: true
+                }
+            },
+            messages: {
+                title: {
+                    required: "Tiêu đề không được để trống"
+                },
+                content: {
+                    required: "Nội dung không được để trống"
+                },
+                description: {
+                    required: "Mô tả ngắn không được để trống"
+                },
+                status: {
+                    required: "Trạng thái không được để trống"
+                }
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+
+        // Lưu bài viết
+        const titleEl = document.getElementById('title');
+        const contentEl = document.getElementById('content');
+        const descriptionEl = document.getElementById('description');
+        const statusEl = document.getElementById('status');
+
+        const btnUpdate = document.getElementById('btn-update');
+        btnUpdate.addEventListener('click', function () {
+            if (!$('#form-update-blog').valid()) {
+                return;
+            }
+
+            // Gửi dữ liệu lên server
+            const data = {
+                title: titleEl.value,
+                content: contentEl.value,
+                description: descriptionEl.value,
+                status: statusEl.value === 'true',
+            }
+
+            // Sử dụng axios để gửi dữ liệu lên server
+            axios.put(`/api/admin/blogs/${blog.id}`, data)
+                .then(function (response) {
+                    toastr.success('Cập nhật bài viết thành công.')
+                })
+                .catch(function (error) {
+                    console.log(error)
+                    toastr.error(error.response.data.message)
+                })
+        })
+
+        // Xóa bài viết
+        const btnDelete = document.getElementById('btn-delete')
+        btnDelete.addEventListener('click', function () {
+            const isConfirm = confirm('Bạn có chắc chắn muốn xóa bài viết này?')
+            if (!isConfirm) {
+                return
+            }
+            axios.delete(`/api/admin/blogs/${blog.id}`)
+                .then(function (response) {
+                    toastr.success('Xóa bài viết thành công')
+                    setTimeout(function () {
+                        window.location.href = '/admin/blogs/own-blogs'
+                    }, 1500)
+                })
+                .catch(function (error) {
+                    console.log(error)
+                    toastr.error(error.response.data.message)
+                })
         })
 
         // Upload image

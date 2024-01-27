@@ -38,4 +38,24 @@ public class Blog {
     @ManyToOne
     @JoinColumn(name = "author_id")
     private User user;
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = new Date();
+        updatedAt = new Date();
+        if(status) {
+            publishedAt = new Date();
+        }
+    }
+    
+    @PreUpdate
+    public void preUpdate() {
+        updatedAt = new Date();
+        if(status) {
+            publishedAt = new Date();
+        } else {
+            publishedAt = null;
+        }
+
+    }
 }
