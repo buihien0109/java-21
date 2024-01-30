@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.example.movie.app.model.enums.MovieType;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.Date;
 import java.util.List;
@@ -47,6 +49,7 @@ public class Movie {
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "actor_id")
     )
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Actor> actors;
 
     @ManyToMany
@@ -55,6 +58,7 @@ public class Movie {
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "director_id")
     )
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Director> directors;
 
     @ManyToMany
@@ -63,5 +67,6 @@ public class Movie {
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Genre> genres;
 }

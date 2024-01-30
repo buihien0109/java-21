@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{admin/layout/layout :: layout(~{:: title}, ~{}, ~{:: .content-wrapper}, ~{:: #js})}">
+
+<head>
+    <title>Tất cả phim</title>
+</head>
+
+<body>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-12">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="/admin/dashboard">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            Danh sách phim
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row py-2">
+                <div class="col-12">
+                    <a href="/admin/movies/create" type="button" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Tạo phim
+                    </a>
+                    <a href="/admin/movies" type="button" class="btn btn-info">
+                        <i class="fas fa-redo"></i> Refresh
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <table id="table-movie" class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Tên phim</th>
+                                    <th>Loại phim</th>
+                                    <th>Năm phát hành</th>
+                                    <th>Thể loại</th>
+                                    <th>View</th>
+                                    <th>Rating</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="movie : ${movieList}">
+                                    <td>
+                                        <a th:href="@{/admin/movies/{id}/detail (id=${movie.id})}"
+                                           th:text="${movie.title}">Bee</a>
+                                    </td>
+                                    <td th:text="${movie.type.getValue()}">Loại phim</td>
+                                    <td th:text="${movie.releaseYear}">Năm phát hành</td>
+                                    <td>
+                                        <span class="badge bg-info mr-1" th:each="genre : ${movie.genres}"
+                                              th:text="${genre.name}">${genre.name}</span>
+                                    </td>
+                                    <td th:text="${movie.view == null ? 0 : #numbers.formatInteger(movie.view,3,'COMMA')}">
+                                        View
+                                    </td>
+                                    <td>
+                                        <span th:text="${movie.rating == null ? 0 : movie.rating}"></span>
+                                        <span style="color: #EDBB0E"><i class="fas fa-star"></i></span>
+                                    </td>
+                                    <td>
+                                        <span class="badge" th:text="${movie.status ? 'Công khai' : 'Nháp'}"
+                                              th:classappend="${movie.status ? 'bg-success' : 'bg-secondary'}">Công khai</span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<th:block id="js">
+    <script th:inline="javascript">
+        $('#table-movie').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
+    </script>
+</th:block>
+</body>
+
+</html>
