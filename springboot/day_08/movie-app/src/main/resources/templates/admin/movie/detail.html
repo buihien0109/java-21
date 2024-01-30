@@ -3,10 +3,9 @@
       th:replace="~{admin/layout/layout :: layout(~{:: title}, ~{:: #css}, ~{:: .content-wrapper}, ~{:: #js})}">
 
 <head>
-    <title>Thực hành làm ứng dụng Meal Finder API với Javascript (Phần 2)</title>
+    <title th:text="${movie.title}">Thực hành làm ứng dụng Meal Finder API với Javascript (Phần 2)</title>
 
     <th:block id="css">
-        <link rel="stylesheet" th:href="@{/admin-assets/admin-lte/plugins/summernote/summernote-bs4.min.css}"/>
         <link rel="stylesheet" th:href="@{/admin-assets/admin-lte/plugins/select2/css/select2.min.css}"/>
         <link rel="stylesheet" th:href="@{/admin-assets/assets/css/style.css}">
     </th:block>
@@ -26,7 +25,7 @@
                         <li class="breadcrumb-item">
                             <a href="/admin/movies">Danh sách phim</a>
                         </li>
-                        <li class="breadcrumb-item active">
+                        <li class="breadcrumb-item active" th:text="${movie.title}">
                             Thực hành làm ứng dụng Meal Finder API
                             với Javascript (Phần 2)
                         </li>
@@ -65,26 +64,25 @@
                                     <div class="col-md-8">
                                         <div class="form-group">
                                             <label>Tiêu đề</label>
-                                            <input type="text" class="form-control" id="title" name="title"/>
+                                            <input type="text" class="form-control" id="title" name="title"
+                                                   th:value="${movie.title}"/>
                                         </div>
 
                                         <div class="form-group">
                                             <label>Mô tả ngắn</label>
-                                            <textarea id="description" class="form-control" rows="4"
-                                                      name="description"></textarea>
+                                            <textarea id="description" class="form-control" rows="6"
+                                                      name="description" th:text="${movie.description}"></textarea>
                                         </div>
 
                                         <div class="form-group">
                                             <label>Đạo diễn</label>
                                             <div class="select2-purple">
                                                 <select class="form-control select2" id="director" multiple="multiple">
-                                                    <option>Alabama</option>
-                                                    <option>Alaska</option>
-                                                    <option>California</option>
-                                                    <option>Delaware</option>
-                                                    <option>Tennessee</option>
-                                                    <option>Texas</option>
-                                                    <option>Washington</option>
+                                                    <option th:each="director : ${directorList}"
+                                                            th:value="${director.id}"
+                                                            th:text="${director.name}"
+                                                            th:selected="${movie.directors.contains(director)}">Alabama
+                                                    </option>
                                                 </select>
                                             </div>
 
@@ -94,13 +92,10 @@
                                             <label>Diễn viên</label>
                                             <div class="select2-purple">
                                                 <select class="form-control select2" id="actor" multiple="multiple">
-                                                    <option>Alabama</option>
-                                                    <option>Alaska</option>
-                                                    <option>California</option>
-                                                    <option>Delaware</option>
-                                                    <option>Tennessee</option>
-                                                    <option>Texas</option>
-                                                    <option>Washington</option>
+                                                    <option th:each="actor : ${actorList}"
+                                                            th:value="${actor.id}"
+                                                            th:text="${actor.name}"
+                                                            th:selected="${movie.actors.contains(actor)}">Alabama</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -109,13 +104,10 @@
                                             <label>Thể loại</label>
                                             <div class="select2-purple">
                                                 <select class="form-control select2" id="genre" multiple="multiple">
-                                                    <option>Alabama</option>
-                                                    <option>Alaska</option>
-                                                    <option>California</option>
-                                                    <option>Delaware</option>
-                                                    <option>Tennessee</option>
-                                                    <option>Texas</option>
-                                                    <option>Washington</option>
+                                                    <option th:each="genre : ${genreList}"
+                                                            th:value="${genre.id}"
+                                                            th:text="${genre.name}"
+                                                            th:selected="${movie.genres.contains(genre)}">Alabama</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -127,25 +119,25 @@
                                         <div class="form-group">
                                             <label>Trạng thái</label>
                                             <select id="status" class="form-control" name="status">
-                                                <option value="false">
+                                                <option value="false" th:selected="not ${movie.status}">
                                                     Nháp
                                                 </option>
-                                                <option value="true">
+                                                <option value="true" th:selected="${movie.status}">
                                                     Công khai
                                                 </option>
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label>Thể loại</label>
+                                            <label>Loại phim</label>
                                             <select id="type" class="form-control" name="type">
-                                                <option value="PHIM_LE">Phim lẻ</option>
-                                                <option value="PHIM_CHIEU_RAP">Phim chiếu rạp</option>
-                                                <option value="PHIM_BO">Phim bộ</option>
+                                                <option value="PHIM_LE" th:selected="${movie.type.toString() == 'PHIM_LE'}">Phim lẻ</option>
+                                                <option value="PHIM_CHIEU_RAP" th:selected="${movie.type.toString() == 'PHIM_CHIEU_RAP'}">Phim chiếu rạp</option>
+                                                <option value="PHIM_BO" th:selected="${movie.type.toString() == 'PHIM_BO'}">Phim bộ</option>
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <div class="image-preview-container mb-3">
-                                                <img src="" alt="" id="image-preview"/>
+                                                <img th:src="${movie.poster}" alt="" id="image-preview"/>
                                             </div>
                                             <label for="image" class="btn btn-info btn-flat rounded">
                                                 Chọn hình ảnh
@@ -164,7 +156,6 @@
 </div>
 
 <th:block id="js">
-    <script th:src="@{/admin-assets/admin-lte/plugins/summernote/summernote-bs4.min.js}"></script>
     <script th:src="@{/admin-assets/admin-lte/plugins/select2/js/select2.full.min.js}"></script>
     <script th:inline="javascript">
         $(".select2").select2();
