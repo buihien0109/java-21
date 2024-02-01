@@ -2,10 +2,12 @@ package org.example.movie.app.controller;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.example.movie.app.entity.Episode;
 import org.example.movie.app.entity.Movie;
 import org.example.movie.app.entity.Review;
 import org.example.movie.app.entity.User;
 import org.example.movie.app.model.enums.MovieType;
+import org.example.movie.app.service.EpisodeService;
 import org.example.movie.app.service.ReviewService;
 import org.example.movie.app.service.WebService;
 import org.springframework.data.domain.Page;
@@ -23,6 +25,7 @@ public class WebController {
     private final WebService webService;
     private final ReviewService reviewService;
     private final HttpSession session;
+    private final EpisodeService episodeService;
 
     @GetMapping("/")
     public String getHomePage(Model model) {
@@ -75,11 +78,32 @@ public class WebController {
         Movie movie = webService.getMovie(id, slug, true);
         List<Movie> relatedMovies = webService.getRelatedMovies(id, movie.getType(), true, 6);
         List<Review> reviews = reviewService.getReviewsOfMovie(id);
+        List<Episode> episodes = episodeService.getEpisodeListOfMovie(id, true);
 
         model.addAttribute("movie", movie);
         model.addAttribute("relatedMovies", relatedMovies);
         model.addAttribute("reviews", reviews);
+        model.addAttribute("episodes", episodes);
         return "web/chi-tiet-phim";
+    }
+
+    @GetMapping("/xem-phim/{id}/{slug}")
+    public String getXemPhimPage(Model model,
+                                 @PathVariable Integer id,
+                                 @PathVariable String slug,
+                                 @RequestParam String tap) {
+        Movie movie = webService.getMovie(id, slug, true);
+        List<Movie> relatedMovies = webService.getRelatedMovies(id, movie.getType(), true, 6);
+        List<Review> reviews = reviewService.getReviewsOfMovie(id);
+        List<Episode> episodes = episodeService.getEpisodeListOfMovie(id, true);
+        Episode currentEpisode = episodeService.getEpisode(id, tap, true);
+
+        model.addAttribute("movie", movie);
+        model.addAttribute("relatedMovies", relatedMovies);
+        model.addAttribute("reviews", reviews);
+        model.addAttribute("episodes", episodes);
+        model.addAttribute("currentEpisode", currentEpisode);
+        return "web/xem-phim";
     }
 
     @GetMapping("/dang-ky")

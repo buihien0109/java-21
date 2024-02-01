@@ -22,6 +22,10 @@ public class EpisodeService {
         return episodeRepository.findByMovie_IdOrderByDisplayOrderAsc(movieId);
     }
 
+    public List<Episode> getEpisodeListOfMovie(Integer movieId, Boolean status) {
+        return episodeRepository.findByMovie_IdAndStatusOrderByDisplayOrderAsc(movieId, status);
+    }
+
     public void uploadVideo(Integer id, MultipartFile file) {
         log.info("Uploading video for episode with id = {}", id);
         log.info("File name: {}", file.getOriginalFilename());
@@ -35,5 +39,13 @@ public class EpisodeService {
 
         episode.setVideoUrl(videoUrl);
         episodeRepository.save(episode);
+    }
+
+    public Episode getEpisode(Integer movieId, String tap, boolean episodeStatus) {
+        if(tap.equals("full")) {
+            return episodeRepository.findByMovie_IdAndDisplayOrderAndStatus(movieId, 1, episodeStatus).orElse(null);
+        } else {
+            return episodeRepository.findByMovie_IdAndDisplayOrderAndStatus(movieId, Integer.parseInt(tap), episodeStatus).orElse(null);
+        }
     }
 }

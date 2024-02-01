@@ -24,6 +24,14 @@
                     </li>
                 </ol>
             </nav>
+
+            <div id="#screen">
+                <video width="100%" controls>
+                    <source th:src="${currentEpisode.videoUrl}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+
             <div class="row mt-4">
                 <div class="col-3">
                     <img id="movie-poster" class="rounded w-100"
@@ -85,28 +93,15 @@
                             </div>
                         </div>
                     </div>
-
-                    <th:block th:if="${movie.type.toString() == 'PHIM_BO' && episodes.size() > 0}">
-                        <a class="d-inline-block btn btn-danger px-5 py-2 mt-3 rounded"
-                           th:href="@{/xem-phim/{id}/{slug} (id=${movie.id}, slug=${movie.slug}, tap=${episodes.get(0).displayOrder})}">
-                            <span><i class="fa-solid fa-play"></i></span>
-                            Xem phim</a>
-                    </th:block>
-
-                    <th:block th:if="${(movie.type.toString() == 'PHIM_LE' || movie.type.toString() == 'PHIM_CHIEU_RAP') && episodes.size() > 0}">
-                        <a class="d-inline-block btn btn-danger px-5 py-2 mt-3 rounded"
-                           th:href="@{/xem-phim/{id}/{slug} (id=${movie.id}, slug=${movie.slug}, tap='full')}">
-                            <span><i class="fa-solid fa-play"></i></span>
-                            Xem phim</a>
-                    </th:block>
                 </div>
             </div>
 
             <div class="mt-4" th:if="${movie.type.toString() == 'PHIM_BO' && episodes.size() > 0}">
                 <h3 class="mb-3">Tập phim</h3>
-                <a class="btn btn-dark me-2"
+                <a class="btn me-2"
                    th:each="episode : ${episodes}"
                    th:text="${episode.name}"
+                   th:classappend="${episode.displayOrder == currentEpisode.displayOrder} ? 'btn-danger disabled' : 'btn-dark'"
                    th:href="@{/xem-phim/{id}/{slug} (id=${movie.id}, slug=${movie.slug}, tap=${episode.displayOrder})}">
                     >Tập 1</a>
             </div>
