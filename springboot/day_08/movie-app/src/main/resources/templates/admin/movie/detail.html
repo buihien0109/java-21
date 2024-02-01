@@ -95,7 +95,8 @@
                                                     <option th:each="actor : ${actorList}"
                                                             th:value="${actor.id}"
                                                             th:text="${actor.name}"
-                                                            th:selected="${movie.actors.contains(actor)}">Alabama</option>
+                                                            th:selected="${movie.actors.contains(actor)}">Alabama
+                                                    </option>
                                                 </select>
                                             </div>
                                         </div>
@@ -107,7 +108,8 @@
                                                     <option th:each="genre : ${genreList}"
                                                             th:value="${genre.id}"
                                                             th:text="${genre.name}"
-                                                            th:selected="${movie.genres.contains(genre)}">Alabama</option>
+                                                            th:selected="${movie.genres.contains(genre)}">Alabama
+                                                    </option>
                                                 </select>
                                             </div>
                                         </div>
@@ -136,9 +138,16 @@
                                         <div class="form-group">
                                             <label>Loại phim</label>
                                             <select id="type" class="form-control" name="type">
-                                                <option value="PHIM_LE" th:selected="${movie.type.toString() == 'PHIM_LE'}">Phim lẻ</option>
-                                                <option value="PHIM_CHIEU_RAP" th:selected="${movie.type.toString() == 'PHIM_CHIEU_RAP'}">Phim chiếu rạp</option>
-                                                <option value="PHIM_BO" th:selected="${movie.type.toString() == 'PHIM_BO'}">Phim bộ</option>
+                                                <option value="PHIM_LE"
+                                                        th:selected="${movie.type.toString() == 'PHIM_LE'}">Phim lẻ
+                                                </option>
+                                                <option value="PHIM_CHIEU_RAP"
+                                                        th:selected="${movie.type.toString() == 'PHIM_CHIEU_RAP'}">Phim
+                                                    chiếu rạp
+                                                </option>
+                                                <option value="PHIM_BO"
+                                                        th:selected="${movie.type.toString() == 'PHIM_BO'}">Phim bộ
+                                                </option>
                                             </select>
                                         </div>
                                         <div class="form-group">
@@ -157,6 +166,49 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="mb-3">Danh sách tập phim</h4>
+                            <table id="table-director" class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="width: 5%">#</th>
+                                    <th style="width: 20%">Tên tập phim</th>
+                                    <th style="width: 40%">Link</th>
+                                    <th style="width: 10%">Thời lượng</th>
+                                    <th style="width: 10%">Trạng thái</th>
+                                    <th style="width: 15%"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="episode : ${episodeList}">
+                                    <td th:text="${episode.displayOrder}">#</td>
+                                    <td th:text="${episode.name}">Tên tập phim</td>
+                                    <td th:text="${episode.videoUrl}">Link</td>
+                                    <td th:text="${episode.duration}">Thời lượng</td>
+                                    <td th:text="${episode.status ? 'Công khai' : 'Nháp'}">Trạng thái</td>
+                                    <td>
+                                        <label th:for="|episode-input-${episode.id}|" class="btn btn-primary btn-sm mb-0"><i
+                                                class="fas fa-upload"></i></label>
+                                        <input type="file" class="d-none" th:id="|episode-input-${episode.id}|"
+                                               th:onchange="|uploadVideo(event, ${episode.id})|">
+
+                                        <button class="btn btn-warning btn-sm text-white"><i class="fas fa-play"></i>
+                                        </button>
+                                        <button class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 </div>
@@ -165,6 +217,30 @@
     <script th:src="@{/admin-assets/admin-lte/plugins/select2/js/select2.full.min.js}"></script>
     <script th:inline="javascript">
         $(".select2").select2();
+
+        const uploadVideo = (event, episodeId) => {
+            // Lấy ra file vừa được chọn
+            const file = event.target.files[0]
+
+            // Tạo đối tượng form data để đưa dữ liệu vào gửi đi
+            const formData = new FormData()
+            formData.append('video', file)
+
+            // Gọi api sử dung axios
+            axios.post(`/api/admin/episodes/${episodeId}/upload-video`, formData)
+                .then(res => {
+                    toastr.success('Upload video thành công.')
+
+                    // Reload lại trang sau 1.5s
+                    setTimeout(() => {
+                        location.reload()
+                    }, 1500)
+                })
+                .catch(err => {
+                    console.log(err)
+                    toastr.error(err.response.data.message)
+                })
+        }
     </script>
 </th:block>
 
