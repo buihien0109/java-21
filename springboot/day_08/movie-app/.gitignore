@@ -7,6 +7,9 @@ target/
 video_uploads/
 image_uploads/
 
+video_uploads/**
+image_uploads/**
+
 ### STS ###
 .apt_generated
 .classpath
