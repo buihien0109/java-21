@@ -3,7 +3,6 @@ package org.example.movie.app.service;
 import lombok.extern.slf4j.Slf4j;
 import org.example.movie.app.exception.BadRequestException;
 import org.example.movie.app.utils.FileUtils;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.ResourceRegion;
@@ -12,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;

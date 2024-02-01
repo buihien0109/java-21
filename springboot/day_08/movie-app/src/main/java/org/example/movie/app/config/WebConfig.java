@@ -18,7 +18,8 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns("/api/reviews/**"); // Chỉ áp dụng cho các request tới các đường dẫn bên dưới
 
         registry.addInterceptor(roleBasedAuthInterceptor)
-                .addPathPatterns("/admin", "/admin/**", "/api/admin/**"); // Chỉ áp dụng cho các request tới các đường dẫn bên dưới
+                .addPathPatterns("/admin", "/admin/**", "/api/admin/**") // Chỉ áp dụng cho các request tới các đường dẫn bên dưới
+                .excludePathPatterns("/admin-assets/**", "/web/js/**", "/web/css/**", "/web/image/**");
     }
 
     @Override

@@ -2,6 +2,7 @@ package org.example.movie.app.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.movie.app.entity.Episode;
 import org.example.movie.app.entity.Movie;
 import org.example.movie.app.repository.MovieRepository;
 import org.springframework.data.domain.Sort;

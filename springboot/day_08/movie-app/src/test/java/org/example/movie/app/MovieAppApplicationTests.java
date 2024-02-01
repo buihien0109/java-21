@@ -43,6 +43,9 @@ class MovieAppApplicationTests {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Autowired
+    private EpisodeRepository episodeRepository;
+
     @Test
     void save_all_genre() {
         Faker faker = new Faker(); // Faker data
@@ -148,6 +151,42 @@ class MovieAppApplicationTests {
                     .directors(rdDirectorList)
                     .build();
             movieRepository.save(movie); // Lưu vào database
+        }
+    }
+
+    @Test
+    void save_all_episode() {
+        Random random = new Random();
+        List<Movie> movieList = movieRepository.findAll();
+
+        for(Movie movie : movieList) {
+            if(movie.getType().equals(MovieType.PHIM_BO)) {
+                // Sử dụng vòng lặp để tạo ra 5 -> 10 tập phim
+                for(int i = 0; i < random.nextInt(5) + 5; i++) {
+                    Episode episode = Episode.builder()
+                            .name("Tập " + (i + 1))
+                            .displayOrder(i + 1)
+                            .status(true)
+                            .createdAt(new Date())
+                            .updatedAt(new Date())
+                            .publishedAt(new Date())
+                            .movie(movie)
+                            .build();
+                    episodeRepository.save(episode);
+                }
+            } else {
+                // Trường hợp phim lẻ, phim chiếu rạp thì chỉ có 1 tập phim
+                Episode episode = Episode.builder()
+                        .name("Tập full")
+                        .displayOrder(1)
+                        .status(true)
+                        .createdAt(new Date())
+                        .updatedAt(new Date())
+                        .publishedAt(new Date())
+                        .movie(movie)
+                        .build();
+                episodeRepository.save(episode);
+            }
         }
     }
 
