@@ -28,6 +28,7 @@ public class SecurityConfig {
 
         // Cấu hình form login
         http.formLogin(formLogin -> {
+            formLogin.loginPage("/login"); // Đường dẫn trang login
             formLogin.defaultSuccessUrl("/", true); // Nếu login thành công thì trở về trang chủ
             formLogin.permitAll(); // Tất cả đều được truy cập
         });

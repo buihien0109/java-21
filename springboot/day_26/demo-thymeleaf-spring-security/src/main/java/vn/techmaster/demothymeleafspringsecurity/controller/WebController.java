@@ -22,4 +22,9 @@ public class WebController {
     public String getAdmin() {
         return "admin";
     }
+
+    @GetMapping("/login")
+    public String getLoginPage() {
+        return "login";
+    }
 }
