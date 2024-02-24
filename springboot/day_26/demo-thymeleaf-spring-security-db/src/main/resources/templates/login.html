@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng nhập</title>
+</head>
+<body>
+
+<h2>Đăng nhập</h2>
+<form method="post" th:action="@{/handle-login}">
+
+    <div>
+        <input type="text" name="email" placeholder="Tên đăng nhập" />
+    </div>
+
+    <div>
+        <input type="password" name="pass" placeholder="Mật khẩu" />
+    </div>
+
+    <button type="submit">Đăng nhập</button>
+</form>
+
+</body>
+</html>
