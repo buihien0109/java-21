@@ -10,8 +10,12 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import vn.techmaster.demothymeleafspringsecurity.security.error.CustomAccessDeniedHandler;
+import vn.techmaster.demothymeleafspringsecurity.security.error.CustomAuthenticationEntryPoint;
 
 @Configuration
 @EnableWebSecurity
@@ -23,6 +27,9 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
     private final CustomUserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
+    private final CustomFilter customFilter;
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
@@ -39,6 +46,9 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        // Cấu hình CSRF (Cross-Site Request Forgery) - Về đọc thêm về CSRF
+        http.csrf(AbstractHttpConfigurer::disable);
+
         // Cấu hình đường dẫn , 401, 403
         http.authorizeHttpRequests(authorizeRequests -> {
             authorizeRequests.anyRequest().permitAll();
@@ -53,8 +63,17 @@ public class SecurityConfig {
             logout.permitAll(); // Tất cả đều được truy cập
         });
 
+        // Cấu hình xử lý exception
+        http.exceptionHandling(exceptionHandling -> {
+            exceptionHandling.authenticationEntryPoint(customAuthenticationEntryPoint);
+            exceptionHandling.accessDeniedHandler(customAccessDeniedHandler);
+        });
+
         // Cấu hình xác thực
         http.authenticationProvider(authenticationProvider());
+
+        // Cấu hình filter
+        http.addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

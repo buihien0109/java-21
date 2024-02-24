@@ -7,18 +7,45 @@
 <body>
 
 <h2>Đăng nhập</h2>
-<form method="post" th:action="@{/handle-login}">
+<form id="form-login">
 
     <div>
-        <input type="text" name="email" placeholder="Tên đăng nhập" />
+        <input type="text" name="email" placeholder="Tên đăng nhập" id="email"/>
     </div>
 
     <div>
-        <input type="password" name="pass" placeholder="Mật khẩu" />
+        <input type="password" name="password" placeholder="Mật khẩu" id="password"/>
     </div>
 
     <button type="submit">Đăng nhập</button>
 </form>
 
+<script>
+    const formLogin = document.getElementById('form-login');
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+
+    formLogin.addEventListener('submit', function (e) {
+        e.preventDefault();
+        fetch('/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: email.value,
+                password: password.value
+            })
+        })
+            .then(response => response.text())
+            .then(data => {
+                alert(data);
+                window.location.href = '/';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+</script>
 </body>
 </html>
