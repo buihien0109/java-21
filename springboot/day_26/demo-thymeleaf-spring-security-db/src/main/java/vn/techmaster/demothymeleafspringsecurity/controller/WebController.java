@@ -33,4 +33,14 @@ public class WebController {
     public String getLoginPage() {
         return "login";
     }
+
+    @GetMapping("/register")
+    public String getRegisterPage() {
+        return "register";
+    }
+
+    @GetMapping("/xac-thuc-tai-khoan")
+    public String getAccountConfirmPage() {
+        return "account-confirm";
+    }
 }

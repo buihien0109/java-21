@@ -28,6 +28,8 @@ public class User {
     @Column(nullable = false)
     String password;
 
+    Boolean enabled;
+
     @ManyToMany(fetch = FetchType.EAGER) // FetchType.EAGER: load all roles when load user
     @JoinTable(
             name = "users_roles",

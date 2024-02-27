@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng ký</title>
+</head>
+<body>
+
+<h2>Đăng ký</h2>
+<form id="form-register">
+
+    <div>
+        <input type="text" placeholder="Nhập tên" id="name"/>
+    </div>
+
+    <div>
+        <input type="text" placeholder="Nhập email" id="email"/>
+    </div>
+
+    <div>
+        <input type="password" placeholder="Nhập mật khẩu" id="password"/>
+    </div>
+
+    <div>
+        <input type="password" placeholder="Nhập lại mật khẩu" id="confirmPassword"/>
+    </div>
+
+    <button type="submit">Đăng ký</button>
+</form>
+
+<script>
+    const formRegister = document.getElementById('form-register');
+    const name = document.getElementById('name');
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirmPassword');
+
+    formRegister.addEventListener('submit', function (e) {
+        e.preventDefault();
+        fetch('/api/auth/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: name.value,
+                email: email.value,
+                password: password.value,
+                confirmPassword: confirmPassword.value
+            })
+        })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+</script>
+</body>
+</html>
