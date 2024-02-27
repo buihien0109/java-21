@@ -30,6 +30,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
     private final TokenConfirmRepository tokenConfirmRepository;
+    private final MailService mailService;
 
     public void login(LoginRequest request) {
         // Tạo đối tượng xác thực
@@ -54,12 +55,12 @@ public class AuthService {
 
     public String register(RegisterRequest request) {
         // Kiểm tra xem email đã tồn tại chưa
-        if(userRepository.findByEmail(request.getEmail()).isPresent()) {
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new RuntimeException("Email already exists");
         }
 
         // Kiểm tra xem password và confirmPassword có giống nhau không
-        if(!request.getPassword().equals(request.getConfirmPassword())) {
+        if (!request.getPassword().equals(request.getConfirmPassword())) {
             throw new RuntimeException("Password and confirmPassword do not match");
         }
 
@@ -86,9 +87,11 @@ public class AuthService {
         tokenConfirm.setExpiredAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000));
         tokenConfirmRepository.save(tokenConfirm);
 
-        // TODO: Gửi email xác nhận đăng ký
-        // Trả về link xác nhận
-        return "http://localhost:8080/xac-thuc-tai-khoan?token=" + tokenConfirm.getToken();
+        // Send mail
+        String link = "http://localhost:8080/xac-thuc-tai-khoan?token=" + tokenConfirm.getToken();
+        mailService.sendMailCreateAccount(user.getEmail(), link);
+
+        return "Register successfully";
     }
 
     public Map<String, Object> confirmAccount(String token) {
@@ -99,7 +102,7 @@ public class AuthService {
                 .findByTokenAndTokenType(token, TokenConfirm.TokenType.REGISTRATION);
 
         // Nếu không tìm thấy token
-        if(tokenConfirmOptional.isEmpty()) {
+        if (tokenConfirmOptional.isEmpty()) {
             data.put("success", false);
             data.put("message", "Token không hợp lệ");
             return data;
@@ -107,14 +110,14 @@ public class AuthService {
 
         TokenConfirm tokenConfirm = tokenConfirmOptional.get();
         // Nếu token dã được xác nhận
-        if(tokenConfirm.getConfirmedAt() != null) {
+        if (tokenConfirm.getConfirmedAt() != null) {
             data.put("success", false);
             data.put("message", "Token đã được xác nhận");
             return data;
         }
 
         // Nếu token đã hết hạn
-        if(tokenConfirm.getExpiredAt().before(new Date())) {
+        if (tokenConfirm.getExpiredAt().before(new Date())) {
             data.put("success", false);
             data.put("message", "Token đã hết hạn");
             return data;
