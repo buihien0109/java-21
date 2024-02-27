@@ -2,9 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Xác nhận tài khoản</title>
 </head>
 <body>
-
+<h2 th:text="${data.message}">Confirm your account</h2>
+<button th:if="${data.success}">
+    <a href="/login">Đăng nhập</a>
+</button>
 </body>
 </html>

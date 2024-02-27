@@ -19,9 +19,7 @@ import vn.techmaster.demothymeleafspringsecurity.repository.RoleRepository;
 import vn.techmaster.demothymeleafspringsecurity.repository.TokenConfirmRepository;
 import vn.techmaster.demothymeleafspringsecurity.repository.UserRepository;
 
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -91,5 +89,48 @@ public class AuthService {
         // TODO: Gửi email xác nhận đăng ký
         // Trả về link xác nhận
         return "http://localhost:8080/xac-thuc-tai-khoan?token=" + tokenConfirm.getToken();
+    }
+
+    public Map<String, Object> confirmAccount(String token) {
+        Map<String, Object> data = new HashMap<>();
+
+        // Tìm kiếm token trong database
+        Optional<TokenConfirm> tokenConfirmOptional = tokenConfirmRepository
+                .findByTokenAndTokenType(token, TokenConfirm.TokenType.REGISTRATION);
+
+        // Nếu không tìm thấy token
+        if(tokenConfirmOptional.isEmpty()) {
+            data.put("success", false);
+            data.put("message", "Token không hợp lệ");
+            return data;
+        }
+
+        TokenConfirm tokenConfirm = tokenConfirmOptional.get();
+        // Nếu token dã được xác nhận
+        if(tokenConfirm.getConfirmedAt() != null) {
+            data.put("success", false);
+            data.put("message", "Token đã được xác nhận");
+            return data;
+        }
+
+        // Nếu token đã hết hạn
+        if(tokenConfirm.getExpiredAt().before(new Date())) {
+            data.put("success", false);
+            data.put("message", "Token đã hết hạn");
+            return data;
+        }
+
+        // Xác nhận tài khoản
+        User user = tokenConfirm.getUser();
+        user.setEnabled(true);
+        userRepository.save(user);
+
+        // Cập nhật thời gian xác nhận
+        tokenConfirm.setConfirmedAt(new Date());
+        tokenConfirmRepository.save(tokenConfirm);
+
+        data.put("success", true);
+        data.put("message", "Xác nhận tài khoản thành công");
+        return data;
     }
 }
