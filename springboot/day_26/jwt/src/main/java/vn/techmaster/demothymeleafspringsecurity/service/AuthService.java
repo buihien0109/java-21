@@ -1,6 +1,5 @@
 package vn.techmaster.demothymeleafspringsecurity.service;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.DisabledException;
@@ -8,6 +7,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import vn.techmaster.demothymeleafspringsecurity.entity.Role;
@@ -18,6 +18,8 @@ import vn.techmaster.demothymeleafspringsecurity.model.request.RegisterRequest;
 import vn.techmaster.demothymeleafspringsecurity.repository.RoleRepository;
 import vn.techmaster.demothymeleafspringsecurity.repository.TokenConfirmRepository;
 import vn.techmaster.demothymeleafspringsecurity.repository.UserRepository;
+import vn.techmaster.demothymeleafspringsecurity.security.CustomUserDetailsService;
+import vn.techmaster.demothymeleafspringsecurity.security.JwtUtils;
 
 import java.util.*;
 
@@ -26,13 +28,14 @@ import java.util.*;
 public class AuthService {
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
-    private final HttpSession session;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
     private final TokenConfirmRepository tokenConfirmRepository;
     private final MailService mailService;
+    private final JwtUtils jwtUtils;
+    private final CustomUserDetailsService customUserDetailsService;
 
-    public void login(LoginRequest request) {
+    public String login(LoginRequest request) {
         // Tạo đối tượng xác thực
         UsernamePasswordAuthenticationToken token
                 = new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
@@ -44,8 +47,13 @@ public class AuthService {
             // Lưu thông tin xác thực vào SecurityContextHolder
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            // Lưu email vào session
-            session.setAttribute("MY_SESSION", request.getEmail());
+            // Get user details
+            UserDetails userDetails = customUserDetailsService
+                    .loadUserByUsername(authentication.getName());
+
+            // Create JWT token and return
+            return jwtUtils.generateToken(userDetails);
+
         } catch (DisabledException e) {
             throw new RuntimeException("Your account is disabled");
         } catch (AuthenticationException e) {
